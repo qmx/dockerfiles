@@ -1,3 +1,3 @@
 FROM alpine:3.5
 
-RUN apk add --no-cache ansible terraform
+RUN apk add --no-cache ansible terraform ca-certificates
