@@ -38,6 +38,10 @@ RUN zsh ~/.zshrc || true
 RUN nvim +PlugInstall +qall 2> /dev/null > /dev/null
 RUN curl -sSf https://sh.rustup.rs | zsh -s -- -y
 RUN /home/$user/.cargo/bin/rustup component add rust-src
+RUN /home/$user/.cargo/bin/rustup toolchain install nightly
+RUN /home/$user/.cargo/bin/rustup component add rustfmt-preview
+RUN /home/$user/.cargo/bin/rustup component add rls-preview
+
 COPY --from=rust-builder /usr/local/cargo/bin/racer /home/$user/.cargo/bin/
 COPY --from=rust-builder /usr/local/cargo/bin/cargo-add /home/$user/.cargo/bin/
 COPY --from=rust-builder /usr/local/cargo/bin/cargo-rm /home/$user/.cargo/bin/
