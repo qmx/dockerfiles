@@ -1,4 +1,4 @@
-FROM rust as rust-builder
+FROM rust:1.23 as rust-builder
 RUN apt-get update && apt-get install -y build-essential pkg-config libssl-dev zlib1g-dev liblzma-dev
 RUN cargo install racer cargo-edit
 RUN cargo install cargo-deb
