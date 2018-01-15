@@ -31,7 +31,6 @@ ARG user=dev
 RUN useradd -m $user -G users,sudo,docker -s /bin/zsh
 USER $user
 RUN python3 -m pip install setuptools && python3 -m pip install wheel && python3 -m pip install neovim
-RUN mkdir ~/.ssh && curl -fsL https://github.com/qmx.keys > ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
 RUN git clone https://github.com/qmx/dotfiles.git ~/.dotfiles
 RUN cd ~/.dotfiles && stow .
 RUN zsh ~/.zshrc || true
@@ -41,6 +40,7 @@ RUN /home/$user/.cargo/bin/rustup component add rust-src
 RUN /home/$user/.cargo/bin/rustup toolchain install nightly
 RUN /home/$user/.cargo/bin/rustup component add rustfmt-preview
 RUN /home/$user/.cargo/bin/rustup component add rls-preview
+RUN mkdir ~/.ssh && curl -fsL https://github.com/qmx.keys > ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
 
 COPY --from=rust-builder /usr/local/cargo/bin/racer /home/$user/.cargo/bin/
 COPY --from=rust-builder /usr/local/cargo/bin/cargo-add /home/$user/.cargo/bin/
