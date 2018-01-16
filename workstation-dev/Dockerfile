@@ -8,6 +8,7 @@ RUN cargo install cargo-tree
 FROM qmxme/workstation-box:latest
 RUN apt-get update && apt-get install -qq -y \
 	build-essential \
+	cmake \
 	direnv \
 	git \
 	htop \
@@ -16,6 +17,7 @@ RUN apt-get update && apt-get install -qq -y \
 	neovim \
 	pkg-config \
 	pwgen \
+	python \
 	python3 \
 	python3-pip \
 	stow \
