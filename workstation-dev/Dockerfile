@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -qq -y \
 	build-essential \
 	cmake \
 	direnv \
+	gdb \
 	git \
 	htop \
 	liblzma-dev \
