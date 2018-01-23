@@ -31,7 +31,6 @@ RUN apt-get update && apt-get install -qq -y \
 	&& rm -rf /var/lib/apt/lists/*
 
 ARG user=dev
-ARG codez=/mnt/codez/dev
 RUN useradd -m $user -G users,sudo,docker -s /bin/zsh
 USER $user
 RUN python3 -m pip install setuptools && python3 -m pip install wheel && python3 -m pip install neovim
@@ -52,6 +51,6 @@ COPY --from=rust-builder /usr/local/cargo/bin/cargo-rm /home/$user/.cargo/bin/
 COPY --from=rust-builder /usr/local/cargo/bin/cargo-upgrade /home/$user/.cargo/bin/
 COPY --from=rust-builder /usr/local/cargo/bin/cargo-deb /home/$user/.cargo/bin/
 COPY --from=rust-builder /usr/local/cargo/bin/cargo-tree /home/$user/.cargo/bin/
-VOLUME ["$codez"]
+VOLUME ["/home/$user/code"]
 
 USER root
