@@ -4,6 +4,12 @@ RUN cargo install racer cargo-edit
 RUN cargo install cargo-deb
 RUN apt-get install -y cmake
 RUN cargo install cargo-tree
+RUN cargo install ripgrep
+RUN cargo install cargo-bloat
+
+FROM golang:1.9.3 as golang-builder
+RUN go get github.com/github/hub && go install github.com/github/hub
+RUN go get github.com/junegunn/fzf && go install github.com/junegunn/fzf
 
 FROM qmxme/workstation-box:latest
 RUN apt-get update && apt-get install -qq -y \
@@ -12,19 +18,24 @@ RUN apt-get update && apt-get install -qq -y \
 	direnv \
 	gdb \
 	git \
+	git-crypt \
 	htop \
+	jq \
 	liblzma-dev \
 	libssl-dev \
+	mtr-tiny \
 	neovim \
 	pkg-config \
 	pwgen \
 	python \
 	python3 \
 	python3-pip \
+	shellcheck \
 	stow \
 	sudo \
 	tmate \
 	zgen \
+	zip \
 	zlib1g-dev \
 	zsh \
 	--no-install-recommends \
@@ -43,6 +54,10 @@ RUN /home/$user/.cargo/bin/rustup component add rust-src
 RUN /home/$user/.cargo/bin/rustup toolchain install nightly
 RUN /home/$user/.cargo/bin/rustup component add rustfmt-preview
 RUN /home/$user/.cargo/bin/rustup component add rls-preview
+RUN mkdir -p /home/$user/.go \
+	&& cd /home/$user/.go \
+	&& curl https://dl.google.com/go/go1.9.3.linux-amd64.tar.gz -o go1.9.3.linux-amd64.tar.gz \
+	&& tar -zxvf go1.9.3.linux-amd64.tar.gz
 RUN mkdir ~/.ssh && curl -fsL https://github.com/qmx.keys > ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
 
 COPY --from=rust-builder /usr/local/cargo/bin/racer /home/$user/.cargo/bin/
@@ -51,6 +66,10 @@ COPY --from=rust-builder /usr/local/cargo/bin/cargo-rm /home/$user/.cargo/bin/
 COPY --from=rust-builder /usr/local/cargo/bin/cargo-upgrade /home/$user/.cargo/bin/
 COPY --from=rust-builder /usr/local/cargo/bin/cargo-deb /home/$user/.cargo/bin/
 COPY --from=rust-builder /usr/local/cargo/bin/cargo-tree /home/$user/.cargo/bin/
-VOLUME ["/home/$user/code"]
+COPY --from=rust-builder /usr/local/cargo/bin/rg /home/$user/.cargo/bin/
+COPY --from=rust-builder /usr/local/cargo/bin/cargo-bloat /home/$user/.cargo/bin/
+COPY --from=golang-builder /go/bin/hub /home/$user/bin/
+COPY --from=golang-builder /go/bin/fzf /home/$user/bin/
+VOLUME ["/mnt/codez"]
 
 USER root
