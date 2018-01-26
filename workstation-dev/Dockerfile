@@ -11,6 +11,24 @@ FROM golang:1.9.3 as golang-builder
 RUN go get github.com/github/hub && go install github.com/github/hub
 RUN go get github.com/junegunn/fzf && go install github.com/junegunn/fzf
 
+# vim-go dependencies
+RUN go get github.com/alecthomas/gometalinter && go install github.com/alecthomas/gometalinter
+RUN go get github.com/davidrjenni/reftools/cmd/fillstruct && go install github.com/davidrjenni/reftools/cmd/fillstruct
+RUN go get github.com/dominikh/go-tools/cmd/keyify && go install github.com/dominikh/go-tools/cmd/keyify
+RUN go get github.com/fatih/gomodifytags && go install github.com/fatih/gomodifytags
+RUN go get github.com/fatih/motion && go install github.com/fatih/motion
+RUN go get github.com/golang/lint/golint && go install github.com/golang/lint/golint
+RUN go get github.com/josharian/impl && go install github.com/josharian/impl
+RUN go get github.com/jstemmer/gotags && go install github.com/jstemmer/gotags
+RUN go get github.com/kisielk/errcheck && go install github.com/kisielk/errcheck
+RUN go get github.com/klauspost/asmfmt/cmd/asmfmt && go install github.com/klauspost/asmfmt/cmd/asmfmt
+RUN go get github.com/nsf/gocode && go install github.com/nsf/gocode
+RUN go get github.com/rogpeppe/godef && go install github.com/rogpeppe/godef
+RUN go get github.com/zmb3/gogetdoc && go install github.com/zmb3/gogetdoc
+RUN go get golang.org/x/tools/cmd/goimports && go install golang.org/x/tools/cmd/goimports
+RUN go get golang.org/x/tools/cmd/gorename && go install golang.org/x/tools/cmd/gorename
+RUN go get golang.org/x/tools/cmd/guru && go install golang.org/x/tools/cmd/guru
+
 FROM qmxme/workstation-box:latest
 RUN apt-get update && apt-get install -qq -y \
 	build-essential \
@@ -61,6 +79,7 @@ RUN mkdir -p /home/$user/.go \
 	&& tar -zxvf go1.9.3.linux-amd64.tar.gz
 RUN mkdir ~/.ssh && curl -fsL https://github.com/qmx.keys > ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
 
+# rust essential crates
 COPY --from=rust-builder /usr/local/cargo/bin/racer /home/$user/.cargo/bin/
 COPY --from=rust-builder /usr/local/cargo/bin/cargo-add /home/$user/.cargo/bin/
 COPY --from=rust-builder /usr/local/cargo/bin/cargo-rm /home/$user/.cargo/bin/
@@ -69,8 +88,27 @@ COPY --from=rust-builder /usr/local/cargo/bin/cargo-deb /home/$user/.cargo/bin/
 COPY --from=rust-builder /usr/local/cargo/bin/cargo-tree /home/$user/.cargo/bin/
 COPY --from=rust-builder /usr/local/cargo/bin/rg /home/$user/.cargo/bin/
 COPY --from=rust-builder /usr/local/cargo/bin/cargo-bloat /home/$user/.cargo/bin/
+
 COPY --from=golang-builder /go/bin/hub /home/$user/bin/
 COPY --from=golang-builder /go/bin/fzf /home/$user/bin/
+
+# vim-go dependencies
+COPY --from=golang-builder /go/bin/gometalinter /home/$user/bin/
+COPY --from=golang-builder /go/bin/fillstruct /home/$user/bin/
+COPY --from=golang-builder /go/bin/keyify /home/$user/bin/
+COPY --from=golang-builder /go/bin/gomodifytags /home/$user/bin/
+COPY --from=golang-builder /go/bin/motion /home/$user/bin/
+COPY --from=golang-builder /go/bin/golint /home/$user/bin/
+COPY --from=golang-builder /go/bin/impl /home/$user/bin/
+COPY --from=golang-builder /go/bin/gotags /home/$user/bin/
+COPY --from=golang-builder /go/bin/errcheck /home/$user/bin/
+COPY --from=golang-builder /go/bin/asmfmt /home/$user/bin/
+COPY --from=golang-builder /go/bin/gocode /home/$user/bin/
+COPY --from=golang-builder /go/bin/godef /home/$user/bin/
+COPY --from=golang-builder /go/bin/gogetdoc /home/$user/bin/
+COPY --from=golang-builder /go/bin/goimports /home/$user/bin/
+COPY --from=golang-builder /go/bin/gorename /home/$user/bin/
+COPY --from=golang-builder /go/bin/guru /home/$user/bin/
 VOLUME ["/mnt/codez"]
 
 USER root
