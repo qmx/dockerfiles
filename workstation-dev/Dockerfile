@@ -54,6 +54,7 @@ RUN /home/$user/.cargo/bin/rustup component add rust-src
 RUN /home/$user/.cargo/bin/rustup toolchain install nightly
 RUN /home/$user/.cargo/bin/rustup component add rustfmt-preview
 RUN /home/$user/.cargo/bin/rustup component add rls-preview
+RUN /home/$user/.cargo/bin/rustup component add rust-analysis
 RUN mkdir -p /home/$user/.go \
 	&& cd /home/$user/.go \
 	&& curl https://dl.google.com/go/go1.9.3.linux-amd64.tar.gz -o go1.9.3.linux-amd64.tar.gz \
