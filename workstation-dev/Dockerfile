@@ -1,11 +1,11 @@
 FROM rust:1.23 as rust-builder
-RUN apt-get update && apt-get install -y build-essential pkg-config libssl-dev zlib1g-dev liblzma-dev
-RUN cargo install racer cargo-edit
+RUN apt-get update && apt-get install -y cmake build-essential pkg-config libssl-dev zlib1g-dev liblzma-dev
+RUN cargo install racer
+RUN cargo install cargo-bloat
 RUN cargo install cargo-deb
-RUN apt-get install -y cmake
+RUN cargo install cargo-edit
 RUN cargo install cargo-tree
 RUN cargo install ripgrep
-RUN cargo install cargo-bloat
 
 FROM golang:1.9.3 as golang-builder
 RUN go get github.com/github/hub && go install github.com/github/hub
