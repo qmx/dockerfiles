@@ -62,7 +62,7 @@ RUN apt-get update && apt-get install -qq -y \
 ARG user=dev
 RUN useradd -m $user -G users,sudo,docker -s /bin/zsh
 USER $user
-RUN python3 -m pip install setuptools && python3 -m pip install wheel && python3 -m pip install neovim
+RUN python3 -m pip install setuptools && python3 -m pip install wheel && python3 -m pip install neovim && python3 -m pip install flake8
 RUN git clone https://github.com/qmx/dotfiles.git ~/.dotfiles
 RUN cd ~/.dotfiles && stow .
 RUN zsh ~/.zshrc || true
