@@ -39,6 +39,7 @@ RUN apt-get update && apt-get install -qq -y \
 	git-crypt \
 	htop \
 	jq \
+	less \
 	liblzma-dev \
 	libssl-dev \
 	mtr-tiny \
