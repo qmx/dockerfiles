@@ -110,6 +110,7 @@ COPY --from=golang-builder /go/bin/gogetdoc /home/$user/bin/
 COPY --from=golang-builder /go/bin/goimports /home/$user/bin/
 COPY --from=golang-builder /go/bin/gorename /home/$user/bin/
 COPY --from=golang-builder /go/bin/guru /home/$user/bin/
+RUN ln -sf /mnt/codez/dev /home/$user/dev
 VOLUME ["/mnt/codez"]
 
 USER root
