@@ -62,23 +62,9 @@ RUN apt-get update && apt-get install -qq -y \
 
 ARG user=dev
 RUN useradd -m $user -G users,sudo,docker -s /bin/zsh
+# user setup
 USER $user
-RUN python3 -m pip install setuptools && python3 -m pip install wheel && python3 -m pip install neovim && python3 -m pip install flake8
-RUN git clone https://github.com/qmx/dotfiles.git ~/.dotfiles
-RUN cd ~/.dotfiles && stow .
-RUN zsh ~/.zshrc || true
-RUN nvim +PlugInstall +qall 2> /dev/null > /dev/null
-RUN curl -sSf https://sh.rustup.rs | zsh -s -- -y
-RUN /home/$user/.cargo/bin/rustup component add rust-src
-RUN /home/$user/.cargo/bin/rustup toolchain install nightly
-RUN /home/$user/.cargo/bin/rustup component add rustfmt-preview
-RUN /home/$user/.cargo/bin/rustup component add rls-preview
-RUN /home/$user/.cargo/bin/rustup component add rust-analysis
-RUN mkdir -p /home/$user/.go \
-	&& cd /home/$user/.go \
-	&& curl https://dl.google.com/go/go1.9.3.linux-amd64.tar.gz -o go1.9.3.linux-amd64.tar.gz \
-	&& tar -zxvf go1.9.3.linux-amd64.tar.gz
-RUN mkdir ~/.ssh && curl -fsL https://github.com/qmx.keys > ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
+RUN mkdir -p /home/$user/bin /home/$user/.cargo/bin
 
 # rust essential crates
 COPY --from=rust-builder /usr/local/cargo/bin/racer /home/$user/.cargo/bin/
@@ -110,7 +96,28 @@ COPY --from=golang-builder /go/bin/gogetdoc /home/$user/bin/
 COPY --from=golang-builder /go/bin/goimports /home/$user/bin/
 COPY --from=golang-builder /go/bin/gorename /home/$user/bin/
 COPY --from=golang-builder /go/bin/guru /home/$user/bin/
+
+# neovim and python dependencies
+RUN python3 -m pip install setuptools && python3 -m pip install wheel && python3 -m pip install neovim && python3 -m pip install flake8
+
+RUN git clone https://github.com/qmx/dotfiles.git ~/.dotfiles
+RUN cd ~/.dotfiles && stow .
+RUN zsh ~/.zshrc || true
+RUN nvim +PlugInstall +qall 2> /dev/null > /dev/null
+RUN curl -sSf https://sh.rustup.rs | zsh -s -- -y
+RUN /home/$user/.cargo/bin/rustup component add rust-src
+RUN /home/$user/.cargo/bin/rustup toolchain install nightly
+RUN /home/$user/.cargo/bin/rustup component add rustfmt-preview
+RUN /home/$user/.cargo/bin/rustup component add rls-preview
+RUN /home/$user/.cargo/bin/rustup component add rust-analysis
+RUN mkdir -p /home/$user/.go \
+	&& cd /home/$user/.go \
+	&& curl https://dl.google.com/go/go1.9.3.linux-amd64.tar.gz -o go1.9.3.linux-amd64.tar.gz \
+	&& tar -zxvf go1.9.3.linux-amd64.tar.gz
+RUN mkdir ~/.ssh && curl -fsL https://github.com/qmx.keys > ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
+
 RUN ln -sf /mnt/codez/dev /home/$user/dev
 VOLUME ["/mnt/codez"]
+VOLUME ["/home/$user/.secrets"]
 
 USER root
