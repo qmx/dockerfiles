@@ -98,7 +98,8 @@ COPY --from=golang-builder /go/bin/gorename /home/$user/bin/
 COPY --from=golang-builder /go/bin/guru /home/$user/bin/
 
 # neovim and python dependencies
-RUN python3 -m pip install setuptools && python3 -m pip install wheel && python3 -m pip install neovim && python3 -m pip install flake8
+RUN python3 -m pip install setuptools && python3 -m pip install wheel && python3 -m pip install neovim && python3 -m pip install flake8 && python3 -m pip install autopep8
+
 
 RUN git clone https://github.com/qmx/dotfiles.git ~/.dotfiles
 RUN cd ~/.dotfiles && stow .
