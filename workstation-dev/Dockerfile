@@ -118,7 +118,8 @@ RUN mkdir -p /home/$user/.go \
 RUN mkdir ~/.ssh && curl -fsL https://github.com/qmx.keys > ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
 
 RUN ln -sf /mnt/codez/dev /home/$user/dev
+RUN ln -sf /mnt/secrets /home/$user/.secrets
 VOLUME ["/mnt/codez"]
-VOLUME ["/mnt/.secrets"]
+VOLUME ["/mnt/secrets"]
 
 USER root
