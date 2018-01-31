@@ -119,6 +119,6 @@ RUN mkdir ~/.ssh && curl -fsL https://github.com/qmx.keys > ~/.ssh/authorized_ke
 
 RUN ln -sf /mnt/codez/dev /home/$user/dev
 VOLUME ["/mnt/codez"]
-VOLUME ["/home/$user/.secrets"]
+VOLUME ["/mnt/.secrets"]
 
 USER root
