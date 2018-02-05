@@ -6,6 +6,7 @@ RUN cargo install cargo-deb
 RUN cargo install cargo-edit
 RUN cargo install cargo-tree
 RUN cargo install ripgrep
+RUN cargo install sccache
 
 FROM golang:1.9.3 as golang-builder
 RUN go get github.com/github/hub && go install github.com/github/hub
@@ -75,6 +76,7 @@ COPY --from=rust-builder /usr/local/cargo/bin/cargo-deb /home/$user/.cargo/bin/
 COPY --from=rust-builder /usr/local/cargo/bin/cargo-tree /home/$user/.cargo/bin/
 COPY --from=rust-builder /usr/local/cargo/bin/rg /home/$user/.cargo/bin/
 COPY --from=rust-builder /usr/local/cargo/bin/cargo-bloat /home/$user/.cargo/bin/
+COPY --from=rust-builder /usr/local/cargo/bin/sccache /home/$user/.cargo/bin/
 
 COPY --from=golang-builder /go/bin/hub /home/$user/bin/
 COPY --from=golang-builder /go/bin/fzf /home/$user/bin/
