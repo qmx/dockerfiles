@@ -33,6 +33,7 @@ RUN go get golang.org/x/tools/cmd/guru && go install golang.org/x/tools/cmd/guru
 FROM qmxme/workstation-box:latest
 RUN apt-get update && apt-get install -qq -y \
 	build-essential \
+	clang \
 	cmake \
 	direnv \
 	gdb \
@@ -41,8 +42,12 @@ RUN apt-get update && apt-get install -qq -y \
 	htop \
 	jq \
 	less \
+	libclang-dev \
 	liblzma-dev \
+	libofx-dev \
+	libsqlite3-dev \
 	libssl-dev \
+	lldb \
 	mtr-tiny \
 	neovim \
 	pkg-config \
@@ -51,6 +56,7 @@ RUN apt-get update && apt-get install -qq -y \
 	python3 \
 	python3-pip \
 	shellcheck \
+	sqlite3 \
 	stow \
 	sudo \
 	tmate \
