@@ -11,6 +11,7 @@ RUN cargo install sccache
 FROM golang:1.9.3 as golang-builder
 RUN go get github.com/github/hub && go install github.com/github/hub
 RUN go get github.com/junegunn/fzf && go install github.com/junegunn/fzf
+RUN go get github.com/GoogleCloudPlatform/container-diff && go install github.com/GoogleCloudPlatform/container-diff
 
 # vim-go dependencies
 RUN go get github.com/alecthomas/gometalinter && go install github.com/alecthomas/gometalinter
@@ -86,6 +87,7 @@ COPY --from=rust-builder /usr/local/cargo/bin/sccache /home/$user/.cargo/bin/
 
 COPY --from=golang-builder /go/bin/hub /home/$user/bin/
 COPY --from=golang-builder /go/bin/fzf /home/$user/bin/
+COPY --from=golang-builder /go/bin/container-diff /home/$user/bin/
 
 # vim-go dependencies
 COPY --from=golang-builder /go/bin/gometalinter /home/$user/bin/
