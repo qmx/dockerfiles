@@ -8,7 +8,7 @@ RUN cargo install cargo-tree
 RUN cargo install ripgrep
 RUN cargo install sccache
 
-FROM golang:1.9.3 as golang-builder
+FROM golang:1.9.4 as golang-builder
 RUN go get github.com/github/hub && go install github.com/github/hub
 RUN go get github.com/junegunn/fzf && go install github.com/junegunn/fzf
 RUN go get github.com/GoogleCloudPlatform/container-diff && go install github.com/GoogleCloudPlatform/container-diff
