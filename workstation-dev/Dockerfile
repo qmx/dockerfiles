@@ -34,6 +34,7 @@ RUN go get golang.org/x/tools/cmd/gorename && go install golang.org/x/tools/cmd/
 RUN go get golang.org/x/tools/cmd/guru && go install golang.org/x/tools/cmd/guru
 
 FROM qmxme/workstation-box:latest
+COPY --from=golang:1.9.4 /usr/local/go /usr/local/go
 RUN apt-get update && apt-get install -qq -y \
 	build-essential \
 	clang \
@@ -124,10 +125,6 @@ RUN /home/$user/.cargo/bin/rustup toolchain install nightly
 RUN /home/$user/.cargo/bin/rustup component add rustfmt-preview
 RUN /home/$user/.cargo/bin/rustup component add rls-preview
 RUN /home/$user/.cargo/bin/rustup component add rust-analysis
-RUN mkdir -p /home/$user/.go \
-	&& cd /home/$user/.go \
-	&& curl https://dl.google.com/go/go1.9.3.linux-amd64.tar.gz -o go1.9.3.linux-amd64.tar.gz \
-	&& tar -zxvf go1.9.3.linux-amd64.tar.gz
 RUN mkdir ~/.ssh && curl -fsL https://github.com/qmx.keys > ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
 
 RUN ln -sf /mnt/codez/dev /home/$user/dev
