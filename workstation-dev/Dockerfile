@@ -99,3 +99,7 @@ VOLUME ["/mnt/secrets"]
 VOLUME ["/home/$user/.ssh"]
 
 USER root
+ENV TARGET_USER=$user
+COPY entrypoint /bin/entrypoint
+ENTRYPOINT ["/bin/entrypoint"]
+CMD ["/usr/sbin/sshd", "-D"]
