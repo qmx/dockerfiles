@@ -32,6 +32,7 @@ RUN go get github.com/zmb3/gogetdoc && go install github.com/zmb3/gogetdoc
 RUN go get golang.org/x/tools/cmd/goimports && go install golang.org/x/tools/cmd/goimports
 RUN go get golang.org/x/tools/cmd/gorename && go install golang.org/x/tools/cmd/gorename
 RUN go get golang.org/x/tools/cmd/guru && go install golang.org/x/tools/cmd/guru
+RUN go get github.com/gsamokovarov/jump && go install github.com/gsamokovarov/jump
 
 FROM qmxme/workstation-box:latest
 COPY --from=golang:1.9.4 /usr/local/go /usr/local/go
@@ -92,6 +93,7 @@ COPY --from=golang-builder /go/bin/hub /home/$user/bin/
 COPY --from=golang-builder /go/bin/fzf /home/$user/bin/
 COPY --from=golang-builder /go/bin/container-diff /home/$user/bin/
 COPY --from=golang-builder /go/bin/dockfmt /home/$user/bin/
+COPY --from=golang-builder /go/bin/jump /home/$user/bin/
 
 # vim-go dependencies
 COPY --from=golang-builder /go/bin/gometalinter /home/$user/bin/
