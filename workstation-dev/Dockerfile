@@ -91,11 +91,10 @@ RUN /home/$user/.cargo/bin/rustup toolchain install nightly
 RUN /home/$user/.cargo/bin/rustup component add rustfmt-preview
 RUN /home/$user/.cargo/bin/rustup component add rls-preview
 RUN /home/$user/.cargo/bin/rustup component add rust-analysis
-RUN mkdir ~/.ssh && curl -fsL https://github.com/qmx.keys > ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
 
 RUN ln -sf /mnt/codez/dev /home/$user/dev
-RUN ln -sf /mnt/secrets /home/$user/.secrets
 VOLUME ["/mnt/codez"]
 VOLUME ["/mnt/secrets"]
+VOLUME ["/home/$user/.ssh"]
 
 USER root
