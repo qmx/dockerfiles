@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [[ -d /mnt/secrets/pack ]]; then
+	stow -v -d /mnt/secrets -t "/home/$TARGET_USER" pack
+fi
+
+exec "$@"
