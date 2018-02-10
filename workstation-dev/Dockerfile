@@ -82,6 +82,7 @@ RUN python3 -m pip install setuptools && python3 -m pip install wheel && python3
 
 
 RUN git clone https://github.com/qmx/dotfiles.git ~/.dotfiles
+RUN mkdir -p ~/.config
 RUN cd ~/.dotfiles && stow .
 RUN zsh ~/.zshrc || true
 RUN nvim +PlugInstall +qall 2> /dev/null > /dev/null
