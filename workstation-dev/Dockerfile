@@ -93,7 +93,6 @@ RUN /home/$user/.cargo/bin/rustup component add rustfmt-preview
 RUN /home/$user/.cargo/bin/rustup component add rls-preview
 RUN /home/$user/.cargo/bin/rustup component add rust-analysis
 
-RUN ln -sf /mnt/codez/dev /home/$user/dev
 VOLUME ["/mnt/codez"]
 VOLUME ["/mnt/secrets"]
 VOLUME ["/home/$user/.ssh"]
