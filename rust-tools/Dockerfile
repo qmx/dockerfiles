@@ -7,3 +7,4 @@ RUN cargo install cargo-edit
 RUN cargo install cargo-tree
 RUN cargo install ripgrep
 RUN cargo install sccache
+RUN cargo install perf-focus
