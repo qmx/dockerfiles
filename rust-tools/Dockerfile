@@ -1,4 +1,4 @@
-FROM rust:1.23
+FROM rust:1.24
 RUN apt-get update && apt-get install -y cmake build-essential pkg-config libssl-dev zlib1g-dev liblzma-dev
 RUN cargo install racer
 RUN cargo install cargo-bloat
