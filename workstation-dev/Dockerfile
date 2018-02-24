@@ -104,6 +104,7 @@ COPY --from=qmxme/universal-ctags:latest /root/ctags/ctags /home/$user/bin
 VOLUME ["/mnt/codez"]
 VOLUME ["/mnt/secrets"]
 VOLUME ["/home/$user/.ssh"]
+VOLUME ["/home/$user/.cargo/registry"]
 
 USER root
 ENV TARGET_USER=$user
