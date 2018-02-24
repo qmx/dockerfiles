@@ -82,6 +82,7 @@ COPY --from=qmxme/golang-tools:latest /go/bin/goimports /home/$user/bin/
 COPY --from=qmxme/golang-tools:latest /go/bin/gorename /home/$user/bin/
 COPY --from=qmxme/golang-tools:latest /go/bin/guru /home/$user/bin/
 
+
 # neovim and python dependencies
 RUN python3 -m pip install setuptools && python3 -m pip install wheel && python3 -m pip install neovim && python3 -m pip install flake8 && python3 -m pip install autopep8
 
@@ -97,6 +98,8 @@ RUN /home/$user/.cargo/bin/rustup toolchain install nightly
 RUN /home/$user/.cargo/bin/rustup component add rustfmt-preview
 RUN /home/$user/.cargo/bin/rustup component add rls-preview
 RUN /home/$user/.cargo/bin/rustup component add rust-analysis
+
+COPY --from=qmxme/universal-ctags:latest /root/ctags/ctags /home/$user/bin
 
 VOLUME ["/mnt/codez"]
 VOLUME ["/mnt/secrets"]
