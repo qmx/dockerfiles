@@ -56,6 +56,7 @@ COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/perf-focus /home/$user/
 COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-watch /home/$user/.cargo/bin/
 COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-expand /home/$user/.cargo/bin/
 COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-license /home/$user/.cargo/bin/
+COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-bump /home/$user/.cargo/bin/
 COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cpubars /home/$user/.cargo/bin/
 
 COPY --from=qmxme/golang-tools:latest /go/bin/hub /home/$user/bin/
