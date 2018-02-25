@@ -43,21 +43,21 @@ USER $user
 RUN mkdir -p /home/$user/bin /home/$user/.cargo/bin
 
 # rust essential crates
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/racer /home/$user/.cargo/bin/
 COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-add /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-rm /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-upgrade /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-deb /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-tree /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/rg /home/$user/.cargo/bin/
 COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-bloat /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/sccache /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/perf-focus /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-watch /home/$user/.cargo/bin/
+COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-bump /home/$user/.cargo/bin/
+COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-deb /home/$user/.cargo/bin/
 COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-expand /home/$user/.cargo/bin/
 COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-license /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-bump /home/$user/.cargo/bin/
+COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-rm /home/$user/.cargo/bin/
+COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-tree /home/$user/.cargo/bin/
+COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-upgrade /home/$user/.cargo/bin/
+COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-watch /home/$user/.cargo/bin/
 COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cpubars /home/$user/.cargo/bin/
+COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/perf-focus /home/$user/.cargo/bin/
+COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/racer /home/$user/.cargo/bin/
+COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/rg /home/$user/.cargo/bin/
+COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/sccache /home/$user/.cargo/bin/
 
 COPY --from=qmxme/golang-tools:latest /go/bin/hub /home/$user/bin/
 COPY --from=qmxme/golang-tools:latest /go/bin/fzf /home/$user/bin/
