@@ -9,3 +9,4 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends \
 
 ENV LC_ALL=C.UTF-8 LANG=C.UTF-8
 WORKDIR /root/
+RUN gpg2 --keyserver pgp.mit.edu --recv-keys 0xAD2171D03979AC8C
