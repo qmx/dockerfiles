@@ -2,6 +2,7 @@ FROM debian:stretch
 RUN apt-get update -qq && apt-get install -y \
 	abcde \
 	lame \
+	icedax \
 	eyed3 \
 	&& rm -rf /var/lib/apt/lists/*
 WORKDIR /work
