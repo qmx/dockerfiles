@@ -29,7 +29,6 @@ RUN apt-get update && apt-get install -qq -y \
 	stow \
 	sudo \
 	tmate \
-	zgen \
 	zip \
 	zlib1g-dev \
 	zsh \
