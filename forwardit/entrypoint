@@ -1,0 +1,4 @@
+#!/bin/sh
+
+
+exec socat "UNIX-LISTEN:/ssh-auth/agent.sock,fork" "UNIX-CONNECT:/source-ssh-auth/agent.sock"
