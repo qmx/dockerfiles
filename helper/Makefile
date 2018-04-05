@@ -12,6 +12,8 @@ build-nocache:
 push: build
 	docker push ${IMAGE}:${VERSION}
 
-tag: push
+tag: build
 	docker tag ${IMAGE}:${VERSION} ${IMAGE}:latest
+
+push-tag: tag
 	docker push ${IMAGE}:latest
