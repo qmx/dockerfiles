@@ -1,4 +1,4 @@
-FROM rust:1.24.1
+FROM rust:1.24.1 as builder
 RUN apt-get update && apt-get install -y cmake build-essential pkg-config libssl-dev zlib1g-dev liblzma-dev
 RUN cargo install --root /opt/rust-tools cargo-bloat
 RUN cargo install --root /opt/rust-tools cargo-bump
@@ -13,3 +13,6 @@ RUN cargo install --root /opt/rust-tools perf-focus
 RUN cargo install --root /opt/rust-tools racer
 RUN cargo install --root /opt/rust-tools ripgrep
 RUN cargo install --root /opt/rust-tools sccache
+
+FROM rust:1.24.1
+COPY --from=builder /opt/rust-tools/bin /opt/rust-tools/bin
