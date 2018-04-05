@@ -43,46 +43,10 @@ USER $user
 RUN mkdir -p /home/$user/bin /home/$user/.cargo/bin
 
 # rust essential crates
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-add /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-bloat /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-bump /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-deb /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-expand /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-license /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-rm /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-tree /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-upgrade /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cargo-watch /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/cpubars /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/perf-focus /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/racer /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/rg /home/$user/.cargo/bin/
-COPY --from=qmxme/rust-tools:latest /usr/local/cargo/bin/sccache /home/$user/.cargo/bin/
+COPY --from=qmxme/rust-tools:latest /opt/rust-tools/bin/* /home/$user/.cargo/bin/
 
-COPY --from=qmxme/golang-tools:latest /go/bin/hub /home/$user/bin/
-COPY --from=qmxme/golang-tools:latest /go/bin/fzf /home/$user/bin/
-COPY --from=qmxme/golang-tools:latest /go/bin/container-diff /home/$user/bin/
-COPY --from=qmxme/golang-tools:latest /go/bin/dockfmt /home/$user/bin/
-COPY --from=qmxme/golang-tools:latest /go/bin/jump /home/$user/bin/
-
-# vim-go dependencies
-COPY --from=qmxme/golang-tools:latest /go/bin/gometalinter /home/$user/bin/
-COPY --from=qmxme/golang-tools:latest /go/bin/fillstruct /home/$user/bin/
-COPY --from=qmxme/golang-tools:latest /go/bin/keyify /home/$user/bin/
-COPY --from=qmxme/golang-tools:latest /go/bin/gomodifytags /home/$user/bin/
-COPY --from=qmxme/golang-tools:latest /go/bin/motion /home/$user/bin/
-COPY --from=qmxme/golang-tools:latest /go/bin/golint /home/$user/bin/
-COPY --from=qmxme/golang-tools:latest /go/bin/impl /home/$user/bin/
-COPY --from=qmxme/golang-tools:latest /go/bin/gotags /home/$user/bin/
-COPY --from=qmxme/golang-tools:latest /go/bin/errcheck /home/$user/bin/
-COPY --from=qmxme/golang-tools:latest /go/bin/asmfmt /home/$user/bin/
-COPY --from=qmxme/golang-tools:latest /go/bin/gocode /home/$user/bin/
-COPY --from=qmxme/golang-tools:latest /go/bin/godef /home/$user/bin/
-COPY --from=qmxme/golang-tools:latest /go/bin/gogetdoc /home/$user/bin/
-COPY --from=qmxme/golang-tools:latest /go/bin/goimports /home/$user/bin/
-COPY --from=qmxme/golang-tools:latest /go/bin/gorename /home/$user/bin/
-COPY --from=qmxme/golang-tools:latest /go/bin/guru /home/$user/bin/
-
+# golang + vim-go tools
+COPY --from=qmxme/golang-tools:latest /go/bin/* /home/$user/bin/
 
 # neovim and python dependencies
 RUN python3 -m pip install setuptools && python3 -m pip install wheel && python3 -m pip install neovim && python3 -m pip install flake8 && python3 -m pip install autopep8

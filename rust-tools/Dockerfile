@@ -1,15 +1,15 @@
 FROM rust:1.24.1
 RUN apt-get update && apt-get install -y cmake build-essential pkg-config libssl-dev zlib1g-dev liblzma-dev
-RUN cargo install cargo-bloat
-RUN cargo install cargo-bump
-RUN cargo install cargo-deb
-RUN cargo install cargo-edit
-RUN cargo install cargo-expand
-RUN cargo install cargo-license
-RUN cargo install cargo-tree
-RUN cargo install cargo-watch
-RUN cargo install cpubars
-RUN cargo install perf-focus
-RUN cargo install racer
-RUN cargo install ripgrep
-RUN cargo install sccache
+RUN cargo install --root /opt/rust-tools cargo-bloat
+RUN cargo install --root /opt/rust-tools cargo-bump
+RUN cargo install --root /opt/rust-tools cargo-deb
+RUN cargo install --root /opt/rust-tools cargo-edit
+RUN cargo install --root /opt/rust-tools cargo-expand
+RUN cargo install --root /opt/rust-tools cargo-license
+RUN cargo install --root /opt/rust-tools cargo-tree
+RUN cargo install --root /opt/rust-tools cargo-watch
+RUN cargo install --root /opt/rust-tools cpubars
+RUN cargo install --root /opt/rust-tools perf-focus
+RUN cargo install --root /opt/rust-tools racer
+RUN cargo install --root /opt/rust-tools ripgrep
+RUN cargo install --root /opt/rust-tools sccache
