@@ -1,4 +1,4 @@
-FROM golang:1.9.4
+FROM golang:1.10.1
 RUN go get github.com/github/hub && go install github.com/github/hub
 RUN go get github.com/junegunn/fzf && go install github.com/junegunn/fzf
 RUN go get github.com/GoogleCloudPlatform/container-diff && go install github.com/GoogleCloudPlatform/container-diff
