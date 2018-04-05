@@ -1,5 +1,5 @@
 FROM qmxme/workstation-box:latest
-COPY --from=golang:1.9.4 /usr/local/go /usr/local/go
+COPY --from=qmxme/golang-tools:latest /usr/local/go /usr/local/go
 RUN apt-get update && apt-get install -qq -y \
 	build-essential \
 	clang \
