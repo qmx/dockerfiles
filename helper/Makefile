@@ -1,11 +1,17 @@
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
+VERSION ?= $(shell git describe --always)
+IMAGE ?= qmxme/${current_dir}
 
 build:
-	docker build -t qmxme/${current_dir} .
+	docker build -t ${IMAGE}:${VERSION} .
 
 build-nocache:
-	docker build --no-cache -t qmxme/${current_dir} .
+	docker build --no-cache -t ${IMAGE}:${VERSION} .
 
-push:
-	docker push qmxme/${current_dir}
+push: build
+	docker push ${IMAGE}:${VERSION}
+
+tag: push
+	docker tag ${IMAGE}:${VERSION} ${IMAGE}:latest
+	docker push ${IMAGE}:latest
