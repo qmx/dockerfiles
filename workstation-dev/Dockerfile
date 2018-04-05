@@ -48,6 +48,9 @@ COPY --from=qmxme/rust-tools:latest /opt/rust-tools/bin/* /home/$user/.cargo/bin
 # golang + vim-go tools
 COPY --from=qmxme/golang-tools:latest /go/bin/* /home/$user/bin/
 
+# universal-ctags
+COPY --from=qmxme/universal-ctags:latest /root/ctags/ctags /home/$user/bin
+
 # neovim and python dependencies
 RUN python3 -m pip install setuptools && python3 -m pip install wheel && python3 -m pip install neovim && python3 -m pip install flake8 && python3 -m pip install autopep8
 
@@ -64,7 +67,6 @@ RUN /home/$user/.cargo/bin/rustup component add rustfmt-preview
 RUN /home/$user/.cargo/bin/rustup component add rls-preview
 RUN /home/$user/.cargo/bin/rustup component add rust-analysis
 
-COPY --from=qmxme/universal-ctags:latest /root/ctags/ctags /home/$user/bin
 
 VOLUME ["/mnt/codez"]
 VOLUME ["/mnt/secrets"]
