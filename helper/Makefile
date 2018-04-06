@@ -4,10 +4,10 @@ VERSION ?= $(shell git describe --always)
 IMAGE ?= qmxme/${current_dir}
 
 build:
-	docker build -t ${IMAGE}:${VERSION} .
+	docker build ${DOCKER_BUILD_OPTS} -t ${IMAGE}:${VERSION} .
 
 build-nocache:
-	docker build --no-cache -t ${IMAGE}:${VERSION} .
+	docker build ${DOCKER_BUILD_OPTS} --no-cache -t ${IMAGE}:${VERSION} .
 
 push: build
 	docker push ${IMAGE}:${VERSION}
