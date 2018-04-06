@@ -41,6 +41,8 @@ ARG uid=1000
 RUN useradd -m $user -u $uid -G users,sudo,docker -s /bin/zsh
 # user setup
 USER $user
+ARG github_user=qmx
+RUN mkdir ~/.ssh && curl -fsL https://github.com/$github_user.keys > ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
 RUN mkdir -p /home/$user/bin /home/$user/.cargo/bin
 
 # rust essential crates
@@ -71,7 +73,6 @@ RUN /home/$user/.cargo/bin/rustup component add rust-analysis
 
 VOLUME ["/mnt/codez"]
 VOLUME ["/mnt/secrets"]
-VOLUME ["/home/$user/.ssh"]
 VOLUME ["/home/$user/.cargo/registry"]
 
 USER root
