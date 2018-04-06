@@ -37,7 +37,8 @@ RUN apt-get update && apt-get install -qq -y \
 	&& rm -rf /var/lib/apt/lists/*
 
 ARG user=dev
-RUN useradd -m $user -G users,sudo,docker -s /bin/zsh
+ARG uid=1000
+RUN useradd -m $user -u $uid -G users,sudo,docker -s /bin/zsh
 # user setup
 USER $user
 RUN mkdir -p /home/$user/bin /home/$user/.cargo/bin
