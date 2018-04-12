@@ -16,7 +16,7 @@ global_domain = Domain.global()
 			CredentialsScope.GLOBAL,
 			"jenkins-hyrule",
 			"jenkins",
-			new BasicSSHUserPrivateKey.FileOnMasterPrivateKeySource("/mnt/secrets/jenkins.sshkey"),
+			new BasicSSHUserPrivateKey.FileOnMasterPrivateKeySource("/mnt/secrets/jenkins.key"),
 			"",
 			""
 			)
