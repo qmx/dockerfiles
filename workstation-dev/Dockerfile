@@ -4,6 +4,7 @@ RUN apt-get update && apt-get install -qq -y \
 	build-essential \
 	clang \
 	cmake \
+	default-libmysqlclient-dev \
 	direnv \
 	gdb \
 	git \
@@ -14,6 +15,7 @@ RUN apt-get update && apt-get install -qq -y \
 	libclang-dev \
 	liblzma-dev \
 	libofx-dev \
+	libpq-dev \
 	libsqlite3-dev \
 	libssl-dev \
 	lldb \
