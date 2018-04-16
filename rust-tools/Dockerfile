@@ -13,6 +13,7 @@ RUN cargo install --root /opt/rust-tools perf-focus
 RUN cargo install --root /opt/rust-tools racer
 RUN cargo install --root /opt/rust-tools ripgrep
 RUN cargo install --root /opt/rust-tools sccache
+RUN cargo install --root /opt/rust-tools diesel_cli
 
 FROM rust:1.24.1
 COPY --from=builder /opt/rust-tools/bin /opt/rust-tools/bin
