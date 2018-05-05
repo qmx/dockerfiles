@@ -1,4 +1,4 @@
-FROM debian:9.4
+FROM debian:9.4 as builder
 RUN apt-get update -q
 RUN apt-get upgrade -y
 RUN apt-get install -y --no-install-recommends \
@@ -25,3 +25,5 @@ RUN git checkout origin/agent-forward
 RUN dch -i "added agent forwarding patch"
 RUN dpkg-buildpackage -uc -us -b
 
+FROM debian:9.4
+COPY --from=builder /tmp/*.deb /tmp/
