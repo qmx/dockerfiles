@@ -1,0 +1,109 @@
+FROM debian:stretch
+# base docker install
+RUN apt-get update \
+	&& apt-get upgrade -y -q \
+	&& apt-get install -y apt-transport-https ca-certificates curl gnupg \
+	&& curl -fsSL "https://download.docker.com/linux/debian/gpg" | apt-key add - \
+	&& echo "deb [arch=amd64] https://download.docker.com/linux/debian stretch stable" > /etc/apt/sources.list.d/docker.list \
+	&& apt-get update -qq \
+	&& apt-get install -y --no-install-recommends docker-ce \
+	&& rm -rf /var/lib/apt/lists/*
+# start sshd/mosh/tmux setup
+RUN apt-get update \
+	&& apt-get install -y \
+	openssh-server \
+	tmux \
+	libprotobuf10 \
+	locales \
+	--no-install-recommends \
+	&& rm -rf /var/lib/apt/lists/*
+COPY --from=qmxme/mosh-builder:latest /tmp/mosh_1.3.2-2.1_amd64.deb /tmp/
+RUN dpkg -i /tmp/mosh_1.3.2-2.1_amd64.deb && rm /tmp/*.deb
+RUN mkdir /var/run/sshd
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+
+ENV LANG="en_US.UTF-8"
+ENV LC_ALL="en_US.UTF-8"
+ENV LANGUAGE="en_US.UTF-8"
+
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+	locale-gen --purge $LANG && \
+	dpkg-reconfigure --frontend=noninteractive locales && \
+	update-locale LANG=$LANG LC_ALL=$LC_ALL LANGUAGE=$LANGUAGE
+# golang setup
+COPY --from=qmxme/golang-tools:latest /usr/local/go /usr/local/go
+
+# dev packages
+RUN apt-get update && apt-get install -qq -y \
+	build-essential \
+	clang \
+	cmake \
+	default-libmysqlclient-dev \
+	direnv \
+	gdb \
+	git \
+	git-crypt \
+	htop \
+	jq \
+	less \
+	libclang-dev \
+	liblzma-dev \
+	libofx-dev \
+	libpq-dev \
+	libsqlite3-dev \
+	libssl-dev \
+	lldb \
+	mtr-tiny \
+	neovim \
+	pkg-config \
+	pwgen \
+	python \
+	python3 \
+	python3-pip \
+	shellcheck \
+	sqlite3 \
+	stow \
+	sudo \
+	tmate \
+	unzip \
+	zgen \
+	zip \
+	zlib1g-dev \
+	zsh \
+	--no-install-recommends \
+	&& rm -rf /var/lib/apt/lists/*
+
+ARG user=qmx
+ARG uid=1000
+ARG github_user=qmx
+RUN useradd -m $user -u $uid -G users,sudo,docker -s /bin/zsh
+USER $user
+RUN mkdir ~/.ssh && curl -fsL https://github.com/$github_user.keys > ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
+RUN mkdir -p /home/$user/bin /home/$user/.cargo/bin ~/.config
+RUN git clone https://github.com/qmx/dotfiles.git ~/.dotfiles
+RUN cd ~/.dotfiles && stow .
+RUN nvim +PlugInstall +qall 2> /dev/null > /dev/null
+# rust essential crates
+COPY --from=qmxme/rust-tools:latest /opt/rust-tools/bin/* /home/$user/.cargo/bin/
+
+# golang + vim-go tools
+COPY --from=qmxme/golang-tools:latest /go/bin/* /home/$user/bin/
+
+# universal-ctags
+COPY --from=qmxme/universal-ctags:latest /opt/local/bin/ctags /home/$user/bin
+
+# install rust
+RUN curl -sSf https://sh.rustup.rs | zsh -s -- -y
+RUN /home/$user/.cargo/bin/rustup component add rust-src
+RUN /home/$user/.cargo/bin/rustup toolchain install nightly
+RUN /home/$user/.cargo/bin/rustup component add rustfmt-preview
+RUN /home/$user/.cargo/bin/rustup component add rls-preview
+RUN /home/$user/.cargo/bin/rustup component add rust-analysis
+
+# neovim and python dependencies
+RUN python3 -m pip install setuptools && python3 -m pip install wheel && python3 -m pip install neovim && python3 -m pip install flake8 && python3 -m pip install autopep8
+
+# make sure we start sshd at the end - always keep this at the bottom
+USER root
+EXPOSE 22 63200/udp
+CMD ["/usr/sbin/sshd", "-D"]
