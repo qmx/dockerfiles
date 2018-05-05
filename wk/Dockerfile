@@ -108,4 +108,6 @@ RUN python3 -m pip install setuptools && python3 -m pip install wheel && python3
 # make sure we start sshd at the end - always keep this at the bottom
 USER root
 EXPOSE 22 63200/udp
+ADD entrypoint.sh /bin/entrypoint.sh
+ENTRYPOINT ["/bin/entrypoint.sh"]
 CMD ["/usr/sbin/sshd", "-D"]
