@@ -84,7 +84,7 @@ RUN mkdir ~/.ssh && curl -fsL https://github.com/$github_user.keys > ~/.ssh/auth
 RUN mkdir -p /home/$user/bin /home/$user/.cargo/bin ~/.config
 RUN git clone https://github.com/qmx/dotfiles.git ~/.dotfiles
 RUN cd ~/.dotfiles && stow .
-RUN nvim +PlugInstall +qall 2> /dev/null > /dev/null
+RUN /opt/neovim/bin/nvim +PlugInstall +qall 2> /dev/null > /dev/null
 # rust essential crates
 COPY --from=qmxme/rust-tools:latest /opt/rust-tools/bin/* /home/$user/.cargo/bin/
 
