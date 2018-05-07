@@ -81,10 +81,9 @@ ARG github_user=qmx
 RUN useradd -m $user -u $uid -G users,sudo,docker -s /bin/zsh
 USER $user
 RUN mkdir ~/.ssh && curl -fsL https://github.com/$github_user.keys > ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
+
+# bin folder
 RUN mkdir -p /home/$user/bin /home/$user/.cargo/bin ~/.config
-RUN git clone https://github.com/qmx/dotfiles.git ~/.dotfiles
-RUN cd ~/.dotfiles && stow .
-RUN /opt/neovim/bin/nvim +PlugInstall +qall 2> /dev/null > /dev/null
 # rust essential crates
 COPY --from=qmxme/rust-tools:latest /opt/rust-tools/bin/* /home/$user/.cargo/bin/
 
@@ -93,6 +92,10 @@ COPY --from=qmxme/golang-tools:latest /go/bin/* /home/$user/bin/
 
 # universal-ctags
 COPY --from=qmxme/universal-ctags:latest /opt/local/bin/ctags /home/$user/bin
+
+# dotfile setup
+RUN git clone https://github.com/qmx/dotfiles.git ~/.dotfiles
+RUN cd ~/.dotfiles && git pull && git reset --hard 331858f2a6d0bd928d78457c1e1e03b76e7e93c1 && stow .
 
 # install rust
 RUN curl -sSf https://sh.rustup.rs | zsh -s -- -y
@@ -103,6 +106,7 @@ RUN /home/$user/.cargo/bin/rustup component add rls-preview
 RUN /home/$user/.cargo/bin/rustup component add rust-analysis
 
 # neovim and python dependencies
+RUN /opt/neovim/bin/nvim +PlugInstall +qall 2> /dev/null > /dev/null
 RUN python3 -m pip install setuptools && python3 -m pip install wheel && python3 -m pip install neovim && python3 -m pip install flake8 && python3 -m pip install autopep8
 
 # make sure we start sshd at the end - always keep this at the bottom
