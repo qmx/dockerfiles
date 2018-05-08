@@ -14,6 +14,8 @@ RUN cargo install --root /opt/rust-tools racer
 RUN cargo install --root /opt/rust-tools ripgrep
 RUN cargo install --root /opt/rust-tools sccache
 RUN cargo install --root /opt/rust-tools diesel_cli
+RUN cargo install --root /opt/rust-tools cargo-bundle
+RUN cargo install --root /opt/rust-tools cargo-release
 
 FROM rust:1.25
 COPY --from=builder /opt/rust-tools/bin /opt/rust-tools/bin
