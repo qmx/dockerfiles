@@ -8,6 +8,8 @@ RUN apt-get update \
 	&& apt-get update -qq \
 	&& apt-get install -y --no-install-recommends docker-ce \
 	&& rm -rf /var/lib/apt/lists/*
+# docker-compose
+RUN curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
 # start sshd/mosh/tmux setup
 RUN apt-get update \
 	&& apt-get install -y \
