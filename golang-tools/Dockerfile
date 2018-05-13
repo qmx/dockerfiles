@@ -1,4 +1,4 @@
-FROM golang:1.10.1 as builder
+FROM golang:1.10.2 as builder
 RUN go get github.com/github/hub
 RUN go get github.com/junegunn/fzf
 RUN go get github.com/GoogleCloudPlatform/container-diff
@@ -25,5 +25,5 @@ RUN go get golang.org/x/tools/cmd/goimports
 RUN go get golang.org/x/tools/cmd/gorename
 RUN go get golang.org/x/tools/cmd/guru
 
-FROM golang:1.10.1
+FROM golang:1.10.2
 COPY --from=builder /go/bin /go/bin
