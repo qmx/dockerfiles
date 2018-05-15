@@ -23,6 +23,7 @@ COPY --from=qmxme/mosh-builder:latest /tmp/mosh_1.3.2-2.1_amd64.deb /tmp/
 RUN dpkg -i /tmp/mosh_1.3.2-2.1_amd64.deb && rm /tmp/*.deb
 RUN mkdir /var/run/sshd
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+RUN sed 's/#Port 22/Port 3222/' -i /etc/ssh/sshd_config
 
 ENV LANG="en_US.UTF-8"
 ENV LC_ALL="en_US.UTF-8"
@@ -113,7 +114,7 @@ RUN python3 -m pip install setuptools && python3 -m pip install wheel && python3
 
 # make sure we start sshd at the end - always keep this at the bottom
 USER root
-EXPOSE 22 63200/udp
+EXPOSE 3222 63200-63220/udp
 ADD entrypoint.sh /bin/entrypoint.sh
 ENTRYPOINT ["/bin/entrypoint.sh"]
 CMD ["/usr/sbin/sshd", "-D"]
