@@ -66,7 +66,6 @@ RUN apt-get update && apt-get install -qq -y \
 	python3 \
 	python3-pip \
 	python3-flake8 \
-	python3-pep8 \
 	python3-setuptools \
 	python3-wheel \
 	shellcheck \
@@ -114,7 +113,7 @@ RUN /home/$user/.cargo/bin/rustup component add rust-analysis
 
 # neovim and python dependencies
 RUN /opt/neovim/bin/nvim +PlugInstall +qall 2> /dev/null > /dev/null
-RUN python3 -m pip install neovim
+RUN python3 -m pip install neovim autopep8
 
 # make sure we start sshd at the end - always keep this at the bottom
 USER root
