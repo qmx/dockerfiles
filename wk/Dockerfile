@@ -102,7 +102,7 @@ COPY --from=qmxme/universal-ctags:latest /opt/local/bin/ctags /home/$user/bin
 
 # dotfile setup
 RUN git clone https://github.com/qmx/dotfiles.git ~/.dotfiles
-RUN cd ~/.dotfiles && git pull && git reset --hard 658934b131b8acda0c0aa8a32ee1f0c9e9d6a1b0 && stow -v .
+RUN cd ~/.dotfiles && git pull && git reset --hard 8768cae9653f31a8f3dbf416be0f75a0ea5e0922 && stow -v .
 
 # install rust
 RUN curl -sSf https://sh.rustup.rs | zsh -s -- -y
