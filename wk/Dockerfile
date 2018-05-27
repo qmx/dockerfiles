@@ -68,6 +68,7 @@ RUN apt-get update && apt-get install -qq -y \
 	python3-pip \
 	python3-setuptools \
 	python3-wheel \
+	quilt \
 	shellcheck \
 	sqlite3 \
 	stow \
