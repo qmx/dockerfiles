@@ -14,7 +14,7 @@
 		<configVersion>2</configVersion>
 		<userRemoteConfigs>
 			<hudson.plugins.git.UserRemoteConfig>
-				<url>git@bitbucket.org:qmx/jenkins-dsl.git</url>
+				<url>git@github.com:qmx/jenkins-dsl.git</url>
 				<credentialsId>jenkins-hyrule</credentialsId>
 			</hudson.plugins.git.UserRemoteConfig>
 		</userRemoteConfigs>
