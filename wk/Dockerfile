@@ -1,6 +1,17 @@
 ARG GOLANG_VERSION=1.10.2
 ARG RUST_VERSION=1.26.2
 
+## universal ctags
+FROM debian:stretch as ctags_builder
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends build-essential
+RUN apt-get install -y --no-install-recommends autoconf automake pkg-config git
+RUN git clone git://github.com/universal-ctags/ctags.git /root/ctags
+WORKDIR /root/ctags
+RUN ./autogen.sh
+RUN ./configure
+RUN make
+
 ## golang tools
 FROM golang:$GOLANG_VERSION as golang_builder
 RUN go get github.com/github/hub
@@ -153,7 +164,7 @@ COPY --from=rust_builder /opt/rust-tools/bin/* /home/$user/.cargo/bin/
 COPY --from=golang_builder /go/bin/* /home/$user/bin/
 
 # universal-ctags
-COPY --from=qmxme/universal-ctags:latest /opt/local/bin/ctags /home/$user/bin
+COPY --from=ctags_builder /opt/local/bin/ctags /home/$user/bin
 
 # dotfile setup
 RUN git clone https://github.com/qmx/dotfiles.git ~/.dotfiles
