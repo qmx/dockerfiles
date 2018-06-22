@@ -1,4 +1,5 @@
 ARG GOLANG_VERSION=1.10.2
+ARG RUST_VERSION=1.26.2
 
 ## golang tools
 FROM golang:$GOLANG_VERSION as golang_builder
@@ -27,6 +28,28 @@ RUN go get github.com/zmb3/gogetdoc
 RUN go get golang.org/x/tools/cmd/goimports
 RUN go get golang.org/x/tools/cmd/gorename
 RUN go get golang.org/x/tools/cmd/guru
+
+## rustlang tools
+
+FROM rust:$RUST_VERSION as rust_builder
+RUN apt-get update && apt-get install -y cmake build-essential pkg-config libssl-dev zlib1g-dev liblzma-dev
+RUN cargo install --root /opt/rust-tools cargo-bloat
+RUN cargo install --root /opt/rust-tools cargo-bump
+RUN cargo install --root /opt/rust-tools cargo-bundle
+RUN cargo install --root /opt/rust-tools cargo-deb
+RUN cargo install --root /opt/rust-tools cargo-edit
+RUN cargo install --root /opt/rust-tools cargo-expand
+RUN cargo install --root /opt/rust-tools cargo-license
+RUN cargo install --root /opt/rust-tools cargo-release
+RUN cargo install --root /opt/rust-tools cargo-tree
+RUN cargo install --root /opt/rust-tools cargo-watch
+RUN cargo install --root /opt/rust-tools cpubars
+RUN cargo install --root /opt/rust-tools diesel_cli
+RUN cargo install --root /opt/rust-tools perf-focus
+RUN cargo install --root /opt/rust-tools racer
+RUN cargo install --root /opt/rust-tools ripgrep
+RUN cargo install --root /opt/rust-tools sccache
+RUN cargo install --root /opt/rust-tools systemfd
 
 FROM debian:stretch
 # base docker install
@@ -124,7 +147,7 @@ RUN mkdir ~/.ssh && curl -fsL https://github.com/$github_user.keys > ~/.ssh/auth
 # bin folder
 RUN mkdir -p /home/$user/bin /home/$user/.cargo/bin ~/.config
 # rust essential crates
-COPY --from=qmxme/rust-tools:latest /opt/rust-tools/bin/* /home/$user/.cargo/bin/
+COPY --from=rust_builder /opt/rust-tools/bin/* /home/$user/.cargo/bin/
 
 # golang + vim-go tools
 COPY --from=golang_builder /go/bin/* /home/$user/bin/
