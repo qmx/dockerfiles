@@ -1,3 +1,33 @@
+ARG GOLANG_VERSION=1.10.2
+
+## golang tools
+FROM golang:$GOLANG_VERSION as golang_builder
+RUN go get github.com/github/hub
+RUN go get github.com/junegunn/fzf
+RUN go get github.com/GoogleCloudPlatform/container-diff
+RUN go get github.com/jessfraz/dockfmt
+RUN go get github.com/gsamokovarov/jump
+RUN go get github.com/golang/dep/cmd/dep
+RUN go get github.com/genuinetools/img
+
+# vim-go dependencies
+RUN go get github.com/alecthomas/gometalinter
+RUN go get github.com/davidrjenni/reftools/cmd/fillstruct
+RUN go get github.com/dominikh/go-tools/cmd/keyify
+RUN go get github.com/fatih/gomodifytags
+RUN go get github.com/fatih/motion
+RUN go get github.com/golang/lint/golint
+RUN go get github.com/josharian/impl
+RUN go get github.com/jstemmer/gotags
+RUN go get github.com/kisielk/errcheck
+RUN go get github.com/klauspost/asmfmt/cmd/asmfmt
+RUN go get github.com/nsf/gocode
+RUN go get github.com/rogpeppe/godef
+RUN go get github.com/zmb3/gogetdoc
+RUN go get golang.org/x/tools/cmd/goimports
+RUN go get golang.org/x/tools/cmd/gorename
+RUN go get golang.org/x/tools/cmd/guru
+
 FROM debian:stretch
 # base docker install
 RUN apt-get update \
@@ -33,8 +63,9 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 	locale-gen --purge $LANG && \
 	dpkg-reconfigure --frontend=noninteractive locales && \
 	update-locale LANG=$LANG LC_ALL=$LC_ALL LANGUAGE=$LANGUAGE
+
 # golang setup
-COPY --from=qmxme/golang-tools:latest /usr/local/go /usr/local/go
+COPY --from=golang_builder /usr/local/go /usr/local/go
 
 # neovim install
 COPY --from=qmxme/neovim-builder:latest /opt/neovim /opt/neovim
@@ -96,7 +127,7 @@ RUN mkdir -p /home/$user/bin /home/$user/.cargo/bin ~/.config
 COPY --from=qmxme/rust-tools:latest /opt/rust-tools/bin/* /home/$user/.cargo/bin/
 
 # golang + vim-go tools
-COPY --from=qmxme/golang-tools:latest /go/bin/* /home/$user/bin/
+COPY --from=golang_builder /go/bin/* /home/$user/bin/
 
 # universal-ctags
 COPY --from=qmxme/universal-ctags:latest /opt/local/bin/ctags /home/$user/bin
