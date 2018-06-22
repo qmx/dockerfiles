@@ -11,6 +11,7 @@ WORKDIR /root/ctags
 RUN ./autogen.sh
 RUN ./configure
 RUN make
+RUN make install
 
 ## golang tools
 FROM golang:$GOLANG_VERSION as golang_builder
@@ -164,7 +165,8 @@ COPY --from=rust_builder /opt/rust-tools/bin/* /home/$user/.cargo/bin/
 COPY --from=golang_builder /go/bin/* /home/$user/bin/
 
 # universal-ctags
-COPY --from=ctags_builder /opt/local/bin/ctags /home/$user/bin
+COPY --from=ctags_builder /usr/local/bin/ctags /home/$user/bin
+COPY --from=ctags_builder /usr/local/bin/readtags /home/$user/bin
 
 # dotfile setup
 RUN git clone https://github.com/qmx/dotfiles.git ~/.dotfiles
