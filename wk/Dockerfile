@@ -162,7 +162,6 @@ RUN cd ~/.dotfiles && stow -v .
 # install rust
 RUN curl -sSf https://sh.rustup.rs | zsh -s -- -y
 RUN /home/$user/.cargo/bin/rustup component add rust-src
-RUN /home/$user/.cargo/bin/rustup toolchain install nightly
 RUN /home/$user/.cargo/bin/rustup component add rustfmt-preview
 RUN /home/$user/.cargo/bin/rustup component add rls-preview
 RUN /home/$user/.cargo/bin/rustup component add rust-analysis
