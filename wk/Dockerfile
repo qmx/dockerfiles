@@ -112,6 +112,7 @@ RUN apt-get update && apt-get install -qq -y \
 	cmake \
 	default-libmysqlclient-dev \
 	direnv \
+	dnsutils \
 	gdb \
 	git \
 	git-crypt \
