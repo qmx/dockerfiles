@@ -142,6 +142,7 @@ RUN apt-get update && apt-get install -qq -y \
 	sudo \
 	tmate \
 	unzip \
+	vim-nox \
 	yapf3 \
 	zgen \
 	zip \
