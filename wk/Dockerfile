@@ -1,5 +1,5 @@
 ARG GOLANG_VERSION=1.10.2
-ARG RUST_VERSION=1.26.2
+ARG RUST_VERSION=1.27.0
 
 ## universal ctags
 FROM debian:stretch as ctags_builder
