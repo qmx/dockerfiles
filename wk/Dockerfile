@@ -63,13 +63,14 @@ RUN cargo install --root /opt/rust-tools ripgrep
 RUN cargo install --root /opt/rust-tools sccache
 RUN cargo install --root /opt/rust-tools systemfd
 
-FROM debian:stretch
+
+FROM debian:buster
 # base docker install
 RUN apt-get update \
 	&& apt-get upgrade -y -q \
 	&& apt-get install -y apt-transport-https ca-certificates curl gnupg \
 	&& curl -fsSL "https://download.docker.com/linux/debian/gpg" | apt-key add - \
-	&& echo "deb [arch=amd64] https://download.docker.com/linux/debian stretch stable" > /etc/apt/sources.list.d/docker.list \
+	&& echo "deb [arch=amd64] https://download.docker.com/linux/debian buster stable" > /etc/apt/sources.list.d/docker.list \
 	&& apt-get update -qq \
 	&& apt-get install -y --no-install-recommends docker-ce \
 	&& rm -rf /var/lib/apt/lists/*
