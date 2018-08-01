@@ -1,18 +1,6 @@
 ARG GOLANG_VERSION=1.10.2
 ARG RUST_VERSION=1.27.0
 
-## universal ctags
-FROM debian:stretch as ctags_builder
-RUN apt-get update
-RUN apt-get install -y --no-install-recommends build-essential
-RUN apt-get install -y --no-install-recommends autoconf automake pkg-config git
-RUN git clone git://github.com/universal-ctags/ctags.git /root/ctags
-WORKDIR /root/ctags
-RUN ./autogen.sh
-RUN ./configure
-RUN make
-RUN make install
-
 ## golang tools
 FROM golang:$GOLANG_VERSION as golang_builder
 RUN go get github.com/github/hub
@@ -114,6 +102,7 @@ RUN apt-get update && apt-get install -qq -y \
 	default-libmysqlclient-dev \
 	direnv \
 	dnsutils \
+	exuberant-ctags \
 	gdb \
 	git \
 	git-crypt \
@@ -166,10 +155,6 @@ COPY --from=rust_builder /opt/rust-tools/bin/* /home/$user/.cargo/bin/
 
 # golang + vim-go tools
 COPY --from=golang_builder /go/bin/* /home/$user/bin/
-
-# universal-ctags
-COPY --from=ctags_builder /usr/local/bin/ctags /home/$user/bin
-COPY --from=ctags_builder /usr/local/bin/readtags /home/$user/bin
 
 # dotfile setup
 RUN git clone https://github.com/qmx/dotfiles.git ~/.dotfiles
