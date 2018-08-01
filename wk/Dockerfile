@@ -9,12 +9,10 @@ RUN go get github.com/GoogleCloudPlatform/container-diff
 RUN go get github.com/jessfraz/dockfmt
 RUN go get github.com/gsamokovarov/jump
 RUN go get github.com/golang/dep/cmd/dep
-RUN go get github.com/genuinetools/img
 
 # vim-go dependencies
 RUN go get github.com/alecthomas/gometalinter
 RUN go get github.com/davidrjenni/reftools/cmd/fillstruct
-RUN go get github.com/dominikh/go-tools/cmd/keyify
 RUN go get github.com/fatih/gomodifytags
 RUN go get github.com/fatih/motion
 RUN go get github.com/golang/lint/golint
