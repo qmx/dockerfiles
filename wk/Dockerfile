@@ -44,11 +44,10 @@ RUN cargo install --root /opt/rust-tools cargo-watch
 RUN cargo install --root /opt/rust-tools cpubars
 RUN cargo install --root /opt/rust-tools diesel_cli
 RUN cargo install --root /opt/rust-tools perf-focus
-RUN cargo install --root /opt/rust-tools racer
 RUN cargo install --root /opt/rust-tools ripgrep
 RUN cargo install --root /opt/rust-tools sccache
 RUN cargo install --root /opt/rust-tools systemfd
-
+RUN cargo install --root /opt/rust-tools cargo-docserver
 
 FROM debian:buster
 # base docker install
