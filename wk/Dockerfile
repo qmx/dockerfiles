@@ -57,10 +57,9 @@ RUN apt-get update \
 	tmux \
 	libprotobuf10 \
 	locales \
+	mosh \
 	--no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
-COPY --from=qmxme/mosh-builder:latest /tmp/mosh_1.3.2-2.1_amd64.deb /tmp/
-RUN dpkg -i /tmp/mosh_1.3.2-2.1_amd64.deb && rm /tmp/*.deb
 RUN mkdir /var/run/sshd
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 RUN sed 's/#Port 22/Port 3222/' -i /etc/ssh/sshd_config
