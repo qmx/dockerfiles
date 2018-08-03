@@ -1,5 +1,5 @@
 ARG GOLANG_VERSION=1.10.2
-ARG RUST_VERSION=1.27.2
+ARG RUST_VERSION=1.28.0
 
 ## golang tools
 FROM golang:$GOLANG_VERSION as golang_builder
