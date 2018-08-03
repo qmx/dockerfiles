@@ -35,6 +35,7 @@ RUN cargo install --root /opt/rust-tools cargo-bloat
 RUN cargo install --root /opt/rust-tools cargo-bump
 RUN cargo install --root /opt/rust-tools cargo-bundle
 RUN cargo install --root /opt/rust-tools cargo-deb
+RUN cargo install --root /opt/rust-tools cargo-docserver
 RUN cargo install --root /opt/rust-tools cargo-edit
 RUN cargo install --root /opt/rust-tools cargo-expand
 RUN cargo install --root /opt/rust-tools cargo-license
@@ -47,7 +48,6 @@ RUN cargo install --root /opt/rust-tools perf-focus
 RUN cargo install --root /opt/rust-tools ripgrep
 RUN cargo install --root /opt/rust-tools sccache
 RUN cargo install --root /opt/rust-tools systemfd
-RUN cargo install --root /opt/rust-tools cargo-docserver
 
 FROM debian:buster
 # base docker install
