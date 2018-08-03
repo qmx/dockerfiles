@@ -11,21 +11,10 @@ RUN go get github.com/gsamokovarov/jump
 RUN go get github.com/golang/dep/cmd/dep
 
 # vim-go dependencies
-RUN go get github.com/alecthomas/gometalinter
-RUN go get github.com/davidrjenni/reftools/cmd/fillstruct
-RUN go get github.com/fatih/gomodifytags
-RUN go get github.com/fatih/motion
-RUN go get github.com/golang/lint/golint
-RUN go get github.com/josharian/impl
-RUN go get github.com/jstemmer/gotags
-RUN go get github.com/kisielk/errcheck
-RUN go get github.com/klauspost/asmfmt/cmd/asmfmt
-RUN go get github.com/nsf/gocode
-RUN go get github.com/rogpeppe/godef
-RUN go get github.com/zmb3/gogetdoc
-RUN go get golang.org/x/tools/cmd/goimports
-RUN go get golang.org/x/tools/cmd/gorename
-RUN go get golang.org/x/tools/cmd/guru
+FROM golang:$GOLANG_VERSION as vimgo_deps
+RUN apt-get update -q && apt-get install -y -qq vim-nox
+RUN git clone https://github.com/fatih/vim-go.git /root/.vim/pack/lang/start/vim-go
+RUN vim +":set nomore" +GoInstallBinaries +qall
 
 ## rustlang tools
 
@@ -150,8 +139,11 @@ RUN mkdir -p /home/$user/bin /home/$user/.cargo/bin ~/.config
 # rust essential crates
 COPY --from=rust_builder /opt/rust-tools/bin/* /home/$user/.cargo/bin/
 
-# golang + vim-go tools
+# golang tools
 COPY --from=golang_builder /go/bin/* /home/$user/bin/
+
+# vim-go tools
+COPY --from=vimgo_deps /go/bin/* /home/$user/bin/
 
 # dotfile setup
 RUN git clone https://github.com/qmx/dotfiles.git ~/.dotfiles
