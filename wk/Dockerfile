@@ -156,10 +156,6 @@ RUN /home/$user/.cargo/bin/rustup component add rustfmt-preview
 RUN /home/$user/.cargo/bin/rustup component add rls-preview
 RUN /home/$user/.cargo/bin/rustup component add rust-analysis
 
-# neovim and python dependencies
-RUN /opt/neovim/bin/nvim +PlugInstall +qall 2> /dev/null > /dev/null
-RUN python3 -m pip install neovim
-
 # make sure we start sshd at the end - always keep this at the bottom
 USER root
 EXPOSE 3222 63200-63220/udp
