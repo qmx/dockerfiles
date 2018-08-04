@@ -109,6 +109,7 @@ RUN apt-get update && apt-get install -qq -y \
 	python3-flake8 \
 	python3-pip \
 	python3-setuptools \
+	python3-venv \
 	python3-wheel \
 	quilt \
 	shellcheck \
