@@ -17,3 +17,9 @@ tag: build
 
 push-tag: tag
 	docker push ${IMAGE}:latest
+
+beta: build
+	docker tag ${IMAGE}:${VERSION} ${IMAGE}:beta
+
+push-beta: beta
+	docker push ${IMAGE}:beta
