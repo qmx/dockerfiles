@@ -76,9 +76,6 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 # golang setup
 COPY --from=golang_builder /usr/local/go /usr/local/go
 
-# neovim install
-COPY --from=qmxme/neovim-builder:latest /opt/neovim /opt/neovim
-
 # dev packages
 RUN apt-get update && apt-get install -qq -y \
 	build-essential \
