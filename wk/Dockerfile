@@ -154,6 +154,7 @@ RUN /home/$user/.cargo/bin/rustup component add rust-src
 RUN /home/$user/.cargo/bin/rustup component add rustfmt-preview
 RUN /home/$user/.cargo/bin/rustup component add rls-preview
 RUN /home/$user/.cargo/bin/rustup component add rust-analysis
+RUN /home/$user/.cargo/bin/rustup install nightly
 
 # make sure we start sshd at the end - always keep this at the bottom
 USER root
