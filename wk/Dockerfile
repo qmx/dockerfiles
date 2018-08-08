@@ -144,7 +144,7 @@ COPY --from=golang_builder /go/bin/* /home/$user/bin/
 COPY --from=vimgo_deps /go/bin/* /home/$user/bin/
 
 # dotfile setup
-RUN git clone https://github.com/qmx/dotfiles.git ~/.dotfiles
+RUN git clone --recursive https://github.com/qmx/dotfiles.git ~/.dotfiles
 RUN cd ~/.dotfiles && stow -v .
 
 # install rust
