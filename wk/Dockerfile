@@ -126,7 +126,6 @@ RUN apt-get update && apt-get install -qq -y \
 	tmate \
 	unzip \
 	vim-nox \
-	yapf3 \
 	zgen \
 	zip \
 	zlib1g-dev \
