@@ -76,6 +76,15 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 # golang setup
 COPY --from=golang_builder /usr/local/go /usr/local/go
 
+# rust essential crates
+COPY --from=rust_builder /opt/rust-tools/bin/* /usr/local/bin/
+
+# golang tools
+COPY --from=golang_builder /go/bin/* /usr/local/bin/
+
+# vim-go tools
+COPY --from=vimgo_deps /go/bin/* /usr/local/bin/
+
 # dev packages
 RUN apt-get update && apt-get install -qq -y \
 	build-essential \
@@ -134,14 +143,6 @@ RUN mkdir ~/.ssh && curl -fsL https://github.com/$github_user.keys > ~/.ssh/auth
 # bin folder
 RUN mkdir -p /home/$user/bin /home/$user/.cargo/bin ~/.config
 
-# rust essential crates
-COPY --from=rust_builder /opt/rust-tools/bin/* /home/$user/bin/
-
-# golang tools
-COPY --from=golang_builder /go/bin/* /home/$user/bin/
-
-# vim-go tools
-COPY --from=vimgo_deps /go/bin/* /home/$user/bin/
 
 # dotfile setup
 RUN git clone --recursive https://github.com/qmx/dotfiles.git ~/.dotfiles
