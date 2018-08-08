@@ -117,6 +117,7 @@ RUN apt-get update && apt-get install -qq -y \
 	python3-setuptools \
 	python3-venv \
 	python3-wheel \
+	qrencode \
 	quilt \
 	shellcheck \
 	sqlite3 \
