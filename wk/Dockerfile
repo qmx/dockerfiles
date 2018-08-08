@@ -133,8 +133,9 @@ RUN mkdir ~/.ssh && curl -fsL https://github.com/$github_user.keys > ~/.ssh/auth
 
 # bin folder
 RUN mkdir -p /home/$user/bin /home/$user/.cargo/bin ~/.config
+
 # rust essential crates
-COPY --from=rust_builder /opt/rust-tools/bin/* /home/$user/.cargo/bin/
+COPY --from=rust_builder /opt/rust-tools/bin/* /home/$user/bin/
 
 # golang tools
 COPY --from=golang_builder /go/bin/* /home/$user/bin/
