@@ -38,6 +38,9 @@ RUN cargo install --root /opt/rust-tools ripgrep
 RUN cargo install --root /opt/rust-tools sccache
 RUN cargo install --root /opt/rust-tools systemfd
 
+FROM rustlang/rust:nightly as rust_nightly_builder
+RUN cargo install --root /opt/rust-tools racer
+
 FROM debian:buster
 # base docker install
 RUN apt-get update \
@@ -78,6 +81,7 @@ COPY --from=golang_builder /usr/local/go /usr/local/go
 
 # rust essential crates
 COPY --from=rust_builder /opt/rust-tools/bin/* /usr/local/bin/
+COPY --from=rust_nightly_builder /opt/rust-tools/bin/* /usr/local/bin/
 
 # golang tools
 COPY --from=golang_builder /go/bin/* /usr/local/bin/
@@ -142,7 +146,6 @@ RUN mkdir ~/.ssh && curl -fsL https://github.com/$github_user.keys > ~/.ssh/auth
 
 # bin folder
 RUN mkdir -p /home/$user/bin /home/$user/.cargo/bin ~/.config
-
 
 # dotfile setup
 RUN git clone --recursive https://github.com/qmx/dotfiles.git ~/.dotfiles
