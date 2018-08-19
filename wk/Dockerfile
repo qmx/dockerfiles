@@ -99,6 +99,7 @@ RUN apt-get update && apt-get install -qq -y \
 	direnv \
 	dnsutils \
 	exuberant-ctags \
+	fakeroot-ng \
 	gdb \
 	git \
 	git-crypt \
