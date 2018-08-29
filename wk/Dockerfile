@@ -114,6 +114,8 @@ RUN apt-get update && apt-get install -qq -y \
 	libssl-dev \
 	lldb \
 	mtr-tiny \
+	nodejs \
+	npm \
 	pkg-config \
 	pwgen \
 	python \
