@@ -7,6 +7,8 @@ FROM debian:stretch as elm_downloader
 RUN apt-get update -y -qq && apt-get install -y curl ca-certificates
 RUN curl -L -o /tmp/elm.tar.gz "https://github.com/elm/compiler/releases/download/0.19.0/binaries-for-linux.tar.gz"
 RUN tar -C /usr/local/bin -zxvf /tmp/elm.tar.gz
+RUN curl -L -o /tmp/elm-format.tar.gz "https://github.com/avh4/elm-format/releases/download/0.8.0/elm-format-0.19-0.8.0-linux-x64.tgz"
+RUN tar -C /usr/local/bin -zxvf /tmp/elm-format.tar.gz
 
 ## golang tools
 FROM golang:$GOLANG_VERSION as golang_builder
@@ -101,6 +103,7 @@ COPY --from=vimgo_deps /go/bin/* /usr/local/bin/
 
 # elm tools
 COPY --from=elm_downloader /usr/local/bin/elm /usr/local/bin/elm
+COPY --from=elm_downloader /usr/local/bin/elm-format /usr/local/bin/elm-format
 
 # dev packages
 RUN apt-get update && apt-get install -qq -y \
