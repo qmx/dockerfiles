@@ -12,12 +12,12 @@ RUN tar -C /usr/local/bin -zxvf /tmp/elm-format.tar.gz
 
 ## golang tools
 FROM golang:$GOLANG_VERSION as golang_builder
+RUN go get github.com/genuinetools/reg
 RUN go get github.com/github/hub
-RUN go get github.com/junegunn/fzf
-RUN go get github.com/GoogleCloudPlatform/container-diff
-RUN go get github.com/jessfraz/dockfmt
-RUN go get github.com/gsamokovarov/jump
 RUN go get github.com/golang/dep/cmd/dep
+RUN go get github.com/gsamokovarov/jump
+RUN go get github.com/jessfraz/dockfmt
+RUN go get github.com/junegunn/fzf
 
 # vim-go dependencies
 FROM golang:$GOLANG_VERSION as vimgo_deps
