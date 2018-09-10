@@ -5,4 +5,4 @@ RUN go get github.com/dmacvicar/terraform-provider-libvirt
 FROM alpine:3.7
 
 RUN apk add --no-cache ansible terraform ca-certificates openssh libvirt-client
-COPY --from=builder /root/go/bin/terraform-provider-libvirt /root/.terraform.d/plugins/terraform-provider-libvirt
+COPY --from=builder /root/go/bin/terraform-provider-libvirt /usr/local/bin/
