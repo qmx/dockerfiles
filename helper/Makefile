@@ -23,3 +23,6 @@ beta: build
 
 push-beta: beta
 	docker push ${IMAGE}:beta
+
+export: build
+	docker export $$(docker create ${IMAGE}:${VERSION}) | gzip -9c > ${current_dir}-${VERSION}.tar.gz
