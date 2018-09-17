@@ -129,6 +129,7 @@ RUN apt-get update && apt-get install -qq -y \
 	libssl-dev \
 	lldb \
 	mtr-tiny \
+	netcat-openbsd \
 	nodejs \
 	npm \
 	pkg-config \
