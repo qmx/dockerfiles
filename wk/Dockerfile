@@ -134,6 +134,7 @@ RUN apt-get update && apt-get install -qq -y \
 	nodejs \
 	npm \
 	pkg-config \
+	protobuf-compiler \
 	pwgen \
 	python \
 	python3 \
