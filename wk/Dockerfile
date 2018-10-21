@@ -94,6 +94,7 @@ COPY --from=vimgo_deps /go/bin/* /usr/local/bin/
 
 # dev packages
 RUN apt-get update && apt-get install -qq -y \
+	apache2-utils \
 	build-essential \
 	clang \
 	cmake \
