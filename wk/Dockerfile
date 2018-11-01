@@ -121,6 +121,7 @@ RUN apt-get update && apt-get install -qq -y \
 	netcat-openbsd \
 	nodejs \
 	npm \
+	openjdk-8-jdk \
 	pkg-config \
 	protobuf-compiler \
 	pwgen \
