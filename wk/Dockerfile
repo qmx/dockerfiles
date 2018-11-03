@@ -44,6 +44,11 @@ FROM rustlang/rust:nightly as rust_nightly_builder
 RUN apt-get update && apt-get install -y cmake build-essential pkg-config libssl-dev zlib1g-dev liblzma-dev
 RUN cargo install --root /opt/rust-tools racer
 
+# install sbt
+FROM debian:buster as sbt_builder
+RUN apt-get update && apt-get install -y curl ca-certificates
+RUN curl -L -o /tmp/sbt.tgz https://piccolo.link/sbt-1.2.6.tgz && tar -C /opt -zxvf /tmp/sbt.tgz &&  rm -rf /tmp/sbt.tgz
+
 FROM debian:buster
 # base docker install
 RUN apt-get update \
@@ -91,6 +96,10 @@ COPY --from=golang_builder /go/bin/* /usr/local/bin/
 
 # vim-go tools
 COPY --from=vimgo_deps /go/bin/* /usr/local/bin/
+
+# java tools
+COPY --from=sbt_builder /opt/sbt /opt/sbt
+RUN ln -sf /opt/sbt/bin/sbt /usr/local/bin/sbt
 
 # dev packages
 RUN apt-get update && apt-get install -qq -y \
