@@ -165,7 +165,7 @@ USER $user
 RUN mkdir ~/.ssh && curl -fsL https://github.com/$github_user.keys > ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
 
 # bin folder
-RUN mkdir -p /home/$user/bin /home/$user/.cargo/bin ~/.config
+RUN mkdir -p /home/$user/bin /home/$user/.cargo/bin ~/.config ~/tmp
 
 # dotfile setup
 RUN git clone --recursive https://github.com/qmx/dotfiles.git ~/.dotfiles
