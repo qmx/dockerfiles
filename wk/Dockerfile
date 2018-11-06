@@ -49,6 +49,12 @@ FROM debian:buster as sbt_builder
 RUN apt-get update && apt-get install -y curl ca-certificates
 RUN curl -L -o /tmp/sbt.tgz https://piccolo.link/sbt-1.2.6.tgz && tar -C /opt -zxvf /tmp/sbt.tgz &&  rm -rf /tmp/sbt.tgz
 
+# install terraform
+FROM debian:buster as terraform_builder
+RUN apt-get update && apt-get install -y curl ca-certificates unzip
+RUN curl -L -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.11.10/terraform_0.11.10_linux_amd64.zip
+RUN cd /usr/local/bin && unzip /tmp/terraform.zip && chmod 755 /usr/local/bin/terraform
+
 FROM debian:buster
 # base docker install
 RUN apt-get update \
@@ -100,6 +106,9 @@ COPY --from=vimgo_deps /go/bin/* /usr/local/bin/
 # java tools
 COPY --from=sbt_builder /opt/sbt /opt/sbt
 RUN ln -sf /opt/sbt/bin/sbt /usr/local/bin/sbt
+
+# terraform
+COPY --from=terraform_builder /usr/local/bin/terraform /usr/local/bin/
 
 # dev packages
 RUN apt-get update && apt-get install -qq -y \
