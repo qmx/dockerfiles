@@ -55,6 +55,12 @@ RUN apt-get update && apt-get install -y curl ca-certificates unzip
 RUN curl -L -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.11.10/terraform_0.11.10_linux_amd64.zip
 RUN cd /usr/local/bin && unzip /tmp/terraform.zip && chmod 755 /usr/local/bin/terraform
 
+# install kubectl
+FROM debian:buster as kubectl_builder
+RUN apt-get update && apt-get install -y curl ca-certificates unzip
+RUN curl -L -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+RUN chmod 755 /usr/local/bin/kubectl
+
 FROM debian:buster
 # base docker install
 RUN apt-get update \
@@ -109,6 +115,9 @@ RUN ln -sf /opt/sbt/bin/sbt /usr/local/bin/sbt
 
 # terraform
 COPY --from=terraform_builder /usr/local/bin/terraform /usr/local/bin/
+
+# kubectl
+COPY --from=kubectl_builder /usr/local/bin/kubectl /usr/local/bin/
 
 # dev packages
 RUN apt-get update && apt-get install -qq -y \
