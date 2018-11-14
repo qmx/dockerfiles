@@ -34,6 +34,7 @@ RUN cargo install --root /opt/rust-tools cargo-tree
 RUN cargo install --root /opt/rust-tools cargo-watch
 RUN cargo install --root /opt/rust-tools cpubars
 RUN cargo install --root /opt/rust-tools diesel_cli
+RUN cargo install --root /opt/rust-tools marinara
 RUN cargo install --root /opt/rust-tools perf-focus
 RUN cargo install --root /opt/rust-tools ripgrep
 RUN cargo install --root /opt/rust-tools sccache
