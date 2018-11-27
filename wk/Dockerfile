@@ -202,6 +202,4 @@ RUN /home/$user/.cargo/bin/rustup target add wasm32-unknown-unknown --toolchain=
 # make sure we start sshd at the end - always keep this at the bottom
 USER root
 EXPOSE 3222 63200-63220/udp
-ADD entrypoint.sh /bin/entrypoint.sh
-ENTRYPOINT ["/bin/entrypoint.sh"]
 CMD ["/usr/sbin/sshd", "-D"]
