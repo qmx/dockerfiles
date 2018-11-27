@@ -7,7 +7,6 @@ RUN go get github.com/genuinetools/reg
 RUN go get github.com/github/hub
 RUN go get github.com/golang/dep/cmd/dep
 RUN go get github.com/gsamokovarov/jump
-RUN go get github.com/jessfraz/dockfmt
 
 # vim-go dependencies
 FROM golang:$GOLANG_VERSION as vimgo_deps
