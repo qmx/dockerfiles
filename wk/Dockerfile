@@ -8,7 +8,6 @@ RUN go get github.com/github/hub
 RUN go get github.com/golang/dep/cmd/dep
 RUN go get github.com/gsamokovarov/jump
 RUN go get github.com/jessfraz/dockfmt
-RUN go get github.com/junegunn/fzf
 
 # vim-go dependencies
 FROM golang:$GOLANG_VERSION as vimgo_deps
@@ -131,6 +130,7 @@ RUN apt-get update && apt-get install -qq -y \
 	dnsutils \
 	exuberant-ctags \
 	fakeroot-ng \
+	fzf \
 	gdb \
 	git \
 	git-crypt \
