@@ -34,7 +34,6 @@ RUN cargo install --root /opt/rust-tools cpubars
 RUN cargo install --root /opt/rust-tools diesel_cli
 RUN cargo install --root /opt/rust-tools marinara
 RUN cargo install --root /opt/rust-tools perf-focus
-RUN cargo install --root /opt/rust-tools ripgrep
 RUN cargo install --root /opt/rust-tools sccache
 RUN cargo install --root /opt/rust-tools systemfd
 RUN cargo install --root /opt/rust-tools wasm-pack
@@ -161,6 +160,7 @@ RUN apt-get update && apt-get install -qq -y \
 	python3-wheel \
 	qrencode \
 	quilt \
+	ripgrep \
 	shellcheck \
 	sqlite3 \
 	stow \
