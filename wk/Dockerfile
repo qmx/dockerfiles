@@ -71,6 +71,7 @@ RUN apt-get update -qq && apt-get install -qq -y \
 	cmake \
 	curl \
 	default-libmysqlclient-dev \
+	default-mysql-client \
 	direnv \
 	dnsutils \
 	docker-compose \
