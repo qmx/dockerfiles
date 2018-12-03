@@ -59,28 +59,81 @@ RUN apt-get update && apt-get install -y curl ca-certificates unzip
 RUN curl -L -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 RUN chmod 755 /usr/local/bin/kubectl
 
+# base distro
+# default package set
 FROM debian:buster
-# base docker install
-RUN apt-get update \
-	&& apt-get upgrade -y -q \
-	&& apt-get install -y apt-transport-https ca-certificates curl gnupg \
-	&& curl -fsSL "https://download.docker.com/linux/debian/gpg" | apt-key add - \
-	&& echo "deb [arch=amd64] https://download.docker.com/linux/debian buster stable" > /etc/apt/sources.list.d/docker.list \
-	&& apt-get update -qq \
-	&& apt-get install -y --no-install-recommends docker-ce \
-	&& rm -rf /var/lib/apt/lists/*
-# docker-compose
-RUN curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
-# start sshd/mosh/tmux setup
-RUN apt-get update \
-	&& apt-get install -y \
-	openssh-server \
-	tmux \
-	libprotobuf10 \
+RUN apt-get update -qq && apt-get install -qq -y \
+	apache2-utils \
+	apt-transport-https \
+	build-essential \
+	cargo \
+	ca-certificates \
+	clang \
+	cmake \
+	curl \
+	default-libmysqlclient-dev \
+	direnv \
+	dnsutils \
+	docker-compose \
+	docker.io \
+	exuberant-ctags \
+	fakeroot-ng \
+	fzf \
+	gdb \
+	git \
+	git-crypt \
+	gnupg \
+	golang-1.11 \
+	htop \
+	jq \
+	less \
+	libclang-dev \
+	liblzma-dev \
+	libofx-dev \
+	libpq-dev \
+	libprotoc-dev \
+	libsqlite3-dev \
+	libssl-dev \
+	lldb \
 	locales \
 	mosh \
+	mtr-tiny \
+	ncdu \
+	netcat-openbsd \
+	nodejs \
+	npm \
+	openjdk-8-jdk \
+	openssh-server \
+	pkg-config \
+	protobuf-compiler \
+	pwgen \
+	python \
+	python3 \
+	python3-flake8 \
+	python3-pip \
+	python3-setuptools \
+	python3-venv \
+	python3-wheel \
+	qrencode \
+	quilt \
+	ripgrep \
+	rustc \
+	shellcheck \
+	sqlite3 \
+	stow \
+	sudo \
+	tmate \
+	tmux \
+	unzip \
+	vim-nox \
+	zgen \
+	zip \
+	zlib1g-dev \
+	zsh \
 	--no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
+
+# sshd setup# sshd setup
 RUN mkdir /var/run/sshd
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 RUN sed 's/#Port 22/Port 3222/' -i /etc/ssh/sshd_config
@@ -93,9 +146,6 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 	locale-gen --purge $LANG && \
 	dpkg-reconfigure --frontend=noninteractive locales && \
 	update-locale LANG=$LANG LC_ALL=$LC_ALL LANGUAGE=$LANGUAGE
-
-# golang setup
-COPY --from=golang_builder /usr/local/go /usr/local/go
 
 # rust essential crates
 COPY --from=rust_builder /opt/rust-tools/bin/* /usr/local/bin/
@@ -117,64 +167,8 @@ COPY --from=terraform_builder /usr/local/bin/terraform /usr/local/bin/
 # kubectl
 COPY --from=kubectl_builder /usr/local/bin/kubectl /usr/local/bin/
 
-# dev packages
-RUN apt-get update && apt-get install -qq -y \
-	apache2-utils \
-	build-essential \
-	clang \
-	cmake \
-	default-libmysqlclient-dev \
-	direnv \
-	dnsutils \
-	exuberant-ctags \
-	fakeroot-ng \
-	fzf \
-	gdb \
-	git \
-	git-crypt \
-	htop \
-	jq \
-	less \
-	libclang-dev \
-	liblzma-dev \
-	libofx-dev \
-	libpq-dev \
-	libsqlite3-dev \
-	libssl-dev \
-	lldb \
-	mtr-tiny \
-	ncdu \
-	netcat-openbsd \
-	nodejs \
-	npm \
-	openjdk-8-jdk \
-	pkg-config \
-	protobuf-compiler \
-	pwgen \
-	python \
-	python3 \
-	python3-flake8 \
-	python3-pip \
-	python3-setuptools \
-	python3-venv \
-	python3-wheel \
-	qrencode \
-	quilt \
-	ripgrep \
-	shellcheck \
-	sqlite3 \
-	stow \
-	sudo \
-	tmate \
-	unzip \
-	vim-nox \
-	zgen \
-	zip \
-	zlib1g-dev \
-	zsh \
-	--no-install-recommends \
-	&& rm -rf /var/lib/apt/lists/*
 
+# user setup
 ARG user=qmx
 ARG uid=1000
 ARG github_user=qmx
