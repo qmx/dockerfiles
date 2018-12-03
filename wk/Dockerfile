@@ -66,7 +66,6 @@ RUN apt-get update -qq && apt-get install -qq -y \
 	apache2-utils \
 	apt-transport-https \
 	build-essential \
-	cargo \
 	ca-certificates \
 	clang \
 	cmake \
@@ -89,7 +88,6 @@ RUN apt-get update -qq && apt-get install -qq -y \
 	less \
 	libclang-dev \
 	liblzma-dev \
-	libofx-dev \
 	libpq-dev \
 	libprotoc-dev \
 	libsqlite3-dev \
@@ -102,7 +100,7 @@ RUN apt-get update -qq && apt-get install -qq -y \
 	netcat-openbsd \
 	nodejs \
 	npm \
-	openjdk-8-jdk \
+	openjdk-8-jdk-headless \
 	openssh-server \
 	pkg-config \
 	protobuf-compiler \
@@ -117,7 +115,6 @@ RUN apt-get update -qq && apt-get install -qq -y \
 	qrencode \
 	quilt \
 	ripgrep \
-	rustc \
 	shellcheck \
 	sqlite3 \
 	stow \
