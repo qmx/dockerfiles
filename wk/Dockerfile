@@ -14,8 +14,7 @@ RUN apt-get update -q && apt-get install -y -qq vim-nox
 RUN git clone https://github.com/fatih/vim-go.git /root/.vim/pack/lang/start/vim-go
 RUN vim +":set nomore" +GoInstallBinaries +qall
 
-## rustlang tools
-
+# rust tools
 FROM rust:$RUST_VERSION as rust_builder
 RUN apt-get update && apt-get install -y cmake build-essential pkg-config libssl-dev zlib1g-dev liblzma-dev
 RUN cargo install --root /opt/rust-tools cargo-bloat
@@ -30,9 +29,7 @@ RUN cargo install --root /opt/rust-tools cargo-license
 RUN cargo install --root /opt/rust-tools cargo-release
 RUN cargo install --root /opt/rust-tools cargo-tree
 RUN cargo install --root /opt/rust-tools cargo-watch
-RUN cargo install --root /opt/rust-tools cpubars
 RUN cargo install --root /opt/rust-tools diesel_cli
-RUN cargo install --root /opt/rust-tools marinara
 RUN cargo install --root /opt/rust-tools perf-focus
 RUN cargo install --root /opt/rust-tools sccache
 RUN cargo install --root /opt/rust-tools systemfd
@@ -145,6 +142,9 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 	dpkg-reconfigure --frontend=noninteractive locales && \
 	update-locale LANG=$LANG LC_ALL=$LC_ALL LANGUAGE=$LANGUAGE
 
+# rust tools
+RUN curl -L -o /tmp/cpubars_0.2.1_amd64.deb https://github.com/qmx/cpubars/releases/download/0.2.1/cpubars_0.2.1_amd64.deb && dpkg -i /tmp/cpubars_0.2.1_amd64.deb && rm /tmp/*.deb
+RUN curl -L -o /tmp/marinara_0.2.0_amd64.deb https://github.com/qmx/marinara/releases/download/0.2.0/marinara_0.2.0_amd64.deb && dpkg -i /tmp/marinara_0.2.0_amd64.deb && rm /tmp/*.deb
 # rust essential crates
 COPY --from=rust_builder /opt/rust-tools/bin/* /usr/local/bin/
 COPY --from=rust_nightly_builder /opt/rust-tools/bin/* /usr/local/bin/
