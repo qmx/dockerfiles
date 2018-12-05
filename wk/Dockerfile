@@ -94,6 +94,7 @@ RUN apt-get update -qq && apt-get install -qq -y \
 	locales \
 	mosh \
 	mtr-tiny \
+	musl-tools \
 	ncdu \
 	netcat-openbsd \
 	nodejs \
@@ -189,6 +190,7 @@ RUN /home/$user/.cargo/bin/rustup component add rls-preview
 RUN /home/$user/.cargo/bin/rustup component add rust-analysis
 RUN /home/$user/.cargo/bin/rustup install nightly
 RUN /home/$user/.cargo/bin/rustup target add wasm32-unknown-unknown --toolchain=nightly
+RUN /home/$user/.cargo/bin/rustup target add x86_64-unknown-linux-musl
 
 # make sure we start sshd at the end - always keep this at the bottom
 USER root
