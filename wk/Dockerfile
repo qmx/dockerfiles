@@ -116,6 +116,7 @@ RUN apt-get update -qq && apt-get install -qq -y \
 	quilt \
 	ripgrep \
 	shellcheck \
+	socat \
 	sqlite3 \
 	stow \
 	sudo \
