@@ -82,6 +82,7 @@ RUN apt-get update -qq && apt-get install -qq -y \
 	gnupg \
 	golang-1.11 \
 	htop \
+	ipcalc \
 	jq \
 	less \
 	libclang-dev \
