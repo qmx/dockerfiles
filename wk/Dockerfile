@@ -4,7 +4,6 @@ ARG RUST_VERSION=1.30.1
 ## golang tools
 FROM golang:$GOLANG_VERSION as golang_builder
 RUN go get github.com/genuinetools/reg
-RUN go get github.com/github/hub
 RUN go get github.com/golang/dep/cmd/dep
 RUN go get github.com/gsamokovarov/jump
 
@@ -82,6 +81,7 @@ RUN apt-get update -qq && apt-get install -qq -y \
 	gnupg \
 	golang-1.11 \
 	htop \
+	hub \
 	hugo \
 	ipcalc \
 	jq \
