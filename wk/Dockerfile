@@ -5,7 +5,6 @@ ARG RUST_VERSION=1.30.1
 FROM golang:$GOLANG_VERSION as golang_builder
 RUN go get github.com/genuinetools/reg
 RUN go get github.com/golang/dep/cmd/dep
-RUN go get github.com/gsamokovarov/jump
 
 # vim-go dependencies
 FROM golang:$GOLANG_VERSION as vimgo_deps
@@ -149,6 +148,7 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 # rust tools
 RUN curl -L -o /tmp/cpubars_0.2.1_amd64.deb https://github.com/qmx/cpubars/releases/download/0.2.1/cpubars_0.2.1_amd64.deb && dpkg -i /tmp/cpubars_0.2.1_amd64.deb && rm /tmp/*.deb
 RUN curl -L -o /tmp/marinara_0.2.0_amd64.deb https://github.com/qmx/marinara/releases/download/0.2.0/marinara_0.2.0_amd64.deb && dpkg -i /tmp/marinara_0.2.0_amd64.deb && rm /tmp/*.deb
+RUN curl -L -o /tmp/jump_0.22.0_amd64.deb https://github.com/gsamokovarov/jump/releases/download/v0.22.0/jump_0.22.0_amd64.deb && dpkg -i /tmp/jump_0.22.0_amd64.deb && rm /tmp/*.deb
 # rust essential crates
 COPY --from=rust_builder /opt/rust-tools/bin/* /usr/local/bin/
 COPY --from=rust_nightly_builder /opt/rust-tools/bin/* /usr/local/bin/
