@@ -57,7 +57,7 @@ RUN chmod 755 /usr/local/bin/kubectl
 # base distro
 # default package set
 FROM debian:buster
-RUN apt-get update -qq && apt-get install -qq -y \
+RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	apache2-utils \
 	apt-transport-https \
 	build-essential \
