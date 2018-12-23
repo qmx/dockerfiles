@@ -80,3 +80,4 @@ ansicolor
 envinject-api
 naginator
 emailext-template
+kubernetes
