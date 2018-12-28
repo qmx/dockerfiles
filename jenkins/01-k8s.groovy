@@ -20,10 +20,19 @@ spec:
     volumeMounts:
     - name: dockersock
       mountPath: /var/run/docker.sock
+    - name: jenkins-keys
+      readOnly: true
+      mountPath: "/mnt/secrets"
   volumes:
   - name: dockersock
     hostPath:
       path: /var/run/docker.sock
+  - name: jenkins-keys
+    secret:
+      secretName: jenkins
+      items:
+        - key: "jenkins.key"
+          path: "jenkins.key"
 """)
 	kubernetes.addTemplate(podTemplate)
 	Jenkins.instance.clouds.removeAll(KubernetesCloud)
