@@ -11,6 +11,7 @@ if (!Jenkins.instance.isQuietingDown()) {
 	slaveContainer.setTtyEnabled(true)
 	def podTemplate = new PodTemplate()
 	podTemplate.setName("jenkins-slave")
+	podTemplate.setNamespace("default")
 	podTemplate.getContainers().add(slaveContainer)
 	kubernetes.addTemplate(podTemplate)
 	Jenkins.instance.clouds.removeAll(KubernetesCloud)
