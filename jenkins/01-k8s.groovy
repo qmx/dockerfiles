@@ -7,12 +7,22 @@ import org.csanchez.jenkins.plugins.kubernetes.PodTemplate
 if (!Jenkins.instance.isQuietingDown()) {
 	def kubernetes = new KubernetesCloud("kubernetes")
 	def podTemplate = new PodTemplate()
-	podTemplate.setName("docker")
+	podTemplate.setName("jenkins-slave")
 	podTemplate.setYaml("""
 apiVersion: v1
 kind: Pod
 spec:
   containers:
+  - name: jnlp
+    image: jenkinsci/jnlp-slave:latest
+    command: ['cat']
+    tty: true
+    volumeMounts:
+    - name: dockersock
+      mountPath: /var/run/docker.sock
+    - name: jenkins-keys
+      readOnly: true
+      mountPath: "/mnt/secrets"
   - name: docker
     image: docker:18.09.0
     command: ['cat']
