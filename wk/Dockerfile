@@ -71,6 +71,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	dnsutils \
 	docker-compose \
 	docker.io \
+	entr \
 	exuberant-ctags \
 	fakeroot-ng \
 	fzf \
