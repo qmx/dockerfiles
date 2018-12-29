@@ -62,6 +62,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	apt-transport-https \
 	build-essential \
 	ca-certificates \
+	cargo \
 	clang \
 	cmake \
 	curl \
@@ -116,6 +117,8 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	qrencode \
 	quilt \
 	ripgrep \
+	rustc \
+	rust-src \
 	shellcheck \
 	socat \
 	sqlite3 \
@@ -187,14 +190,9 @@ RUN git clone --recursive https://github.com/qmx/dotfiles.git ~/.dotfiles
 RUN cd ~/.dotfiles && stow -v .
 
 # install rust
-RUN curl -sSf https://sh.rustup.rs | zsh -s -- -y
-RUN /home/$user/.cargo/bin/rustup component add rust-src
-RUN /home/$user/.cargo/bin/rustup component add rustfmt-preview
-RUN /home/$user/.cargo/bin/rustup component add rls-preview
-RUN /home/$user/.cargo/bin/rustup component add rust-analysis
-RUN /home/$user/.cargo/bin/rustup install nightly
-RUN /home/$user/.cargo/bin/rustup target add wasm32-unknown-unknown --toolchain=nightly
-RUN /home/$user/.cargo/bin/rustup target add x86_64-unknown-linux-musl
+RUN curl -sSf https://sh.rustup.rs | zsh -s -- -y --default-toolchain none
+RUN /home/$user/.cargo/bin/rustup toolchain link system /usr
+RUN /home/$user/.cargo/bin/rustup default system
 
 # make sure we start sshd at the end - always keep this at the bottom
 USER root
