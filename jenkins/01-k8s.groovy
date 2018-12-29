@@ -17,6 +17,7 @@ if (!Jenkins.instance.isQuietingDown()) {
 	Jenkins.instance.clouds.removeAll(KubernetesCloud)
 	Jenkins.instance.clouds.add(kubernetes)
 	Jenkins.instance.setNumExecutors(0)
+	Jenkins.instance.setSlaveAgentPort(50000)
 	Jenkins.instance.save()
 } else {
 	println 'Shutdown mode enabled, bailing out'
