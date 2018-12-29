@@ -1,7 +1,8 @@
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 VERSION ?= $(shell git describe --always)
-IMAGE ?= qmxme/${current_dir}
+REPO ?= qmxme
+IMAGE ?= ${REPO}/${current_dir}
 
 build:
 	docker build ${DOCKER_BUILD_OPTS} -t ${IMAGE}:${VERSION} .
