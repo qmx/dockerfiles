@@ -1,7 +1,6 @@
 #!groovy
 
 import jenkins.model.*
-import hudson.model.Node.Mode.NORMAL
 import org.csanchez.jenkins.plugins.kubernetes.KubernetesCloud
 import org.csanchez.jenkins.plugins.kubernetes.PodTemplate
 import org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate
@@ -16,7 +15,7 @@ if (!Jenkins.instance.isQuietingDown()) {
 	podTemplate.setInheritFrom("")
 	podTemplate.setLabel("")
 	podTemplate.setNodeSelector("")
-	podTemplate.setNodeUsageMode(NORMAL)
+	podTemplate.setNodeUsageMode(hudson.model.Node.Mode.NORMAL)
 	podTemplate.setCustomWorkspaceVolumeEnabled(false)
 	podTemplate.getContainers().add(slaveContainer)
 	kubernetes.setDefaultsProviderTemplate("")
