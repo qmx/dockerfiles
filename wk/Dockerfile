@@ -70,7 +70,6 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	default-mysql-client \
 	direnv \
 	dnsutils \
-	docker-compose \
 	docker.io \
 	entr \
 	exuberant-ctags \
