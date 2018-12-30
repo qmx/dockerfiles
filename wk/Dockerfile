@@ -123,6 +123,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	python3-wheel \
 	qrencode \
 	quilt \
+	restic \
 	ripgrep \
 	rustc \
 	rust-src \
