@@ -55,8 +55,17 @@ RUN curl -L -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-
 RUN chmod 755 /usr/local/bin/kubectl
 
 # base distro
-# default package set
 FROM debian:buster
+RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
+	openssh-server \
+	--no-install-recommends \
+	&& rm -rf /var/lib/apt/lists/*
+# sshd setup
+RUN mkdir /var/run/sshd
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+RUN sed 's/#Port 22/Port 3222/' -i /etc/ssh/sshd_config
+
+# default package set
 RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	apache2-utils \
 	apt-transport-https \
@@ -102,7 +111,6 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	nodejs \
 	npm \
 	openjdk-8-jdk-headless \
-	openssh-server \
 	pkg-config \
 	protobuf-compiler \
 	pwgen \
@@ -134,10 +142,6 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	--no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
-# sshd setup# sshd setup
-RUN mkdir /var/run/sshd
-RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
-RUN sed 's/#Port 22/Port 3222/' -i /etc/ssh/sshd_config
 
 ENV LANG="en_US.UTF-8"
 ENV LC_ALL="en_US.UTF-8"
