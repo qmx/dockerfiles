@@ -186,8 +186,8 @@ RUN useradd -m $user -u $uid -G users,sudo,docker -s /bin/zsh
 USER $user
 RUN mkdir ~/.ssh && curl -fsL https://github.com/$github_user.keys > ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
 
-# bin folder
-RUN mkdir -p /home/$user/bin /home/$user/.cargo/bin ~/.config ~/tmp
+# some empty folders, with proper permissions
+RUN mkdir -p ~/bin ~/.cargo/bin ~/.config ~/tmp ~/.gnupg ~/.local ~/.vim && chmod 700 ~/.gnupg
 
 # dotfile setup
 RUN git clone --recursive https://github.com/qmx/dotfiles.git ~/.dotfiles
