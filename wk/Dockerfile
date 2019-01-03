@@ -45,7 +45,7 @@ RUN curl -L -o /tmp/sbt.tgz https://piccolo.link/sbt-1.2.6.tgz && tar -C /opt -z
 # install terraform
 FROM debian:buster as terraform_builder
 RUN apt-get update && apt-get install -y curl ca-certificates unzip
-RUN curl -L -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.11.10/terraform_0.11.10_linux_amd64.zip
+RUN curl -L -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_linux_amd64.zip
 RUN cd /usr/local/bin && unzip /tmp/terraform.zip && chmod 755 /usr/local/bin/terraform
 
 # install kubectl
