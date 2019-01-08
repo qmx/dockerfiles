@@ -177,12 +177,14 @@ COPY --from=terraform_builder /usr/local/bin/terraform /usr/local/bin/
 # kubectl
 COPY --from=kubectl_builder /usr/local/bin/kubectl /usr/local/bin/
 
+# setup restic perms
+RUN chgrp backup /usr/bin/restic && chmod 750 /usr/bin/restic && setcap cap_dac_read_search=+ep /usr/bin/restic
 
 # user setup
 ARG user=qmx
 ARG uid=1000
 ARG github_user=qmx
-RUN useradd -m $user -u $uid -G users,sudo,docker -s /bin/zsh
+RUN useradd -m $user -u $uid -G users,sudo,docker,backup -s /bin/zsh
 USER $user
 RUN mkdir ~/.ssh && curl -fsL https://github.com/$github_user.keys > ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
 
