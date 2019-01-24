@@ -1,5 +1,6 @@
 ARG GOLANG_VERSION=1.11.4
 ARG RUST_VERSION=1.31.0
+ARG DEBIAN_BUSTER_HASH=sha256:4392c8510201816bace1ab55164964c897ebabf5d47ef2e1a20c258d21e80f3b
 
 ## golang tools
 FROM golang:$GOLANG_VERSION as golang_builder
@@ -55,7 +56,7 @@ RUN curl -L -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-
 RUN chmod 755 /usr/local/bin/kubectl
 
 # base distro
-FROM debian:buster
+FROM debian:buster@$DEBIAN_BUSTER_HASH
 RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	openssh-server \
 	--no-install-recommends \
