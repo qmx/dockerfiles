@@ -84,6 +84,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	entr \
 	exuberant-ctags \
 	fakeroot-ng \
+	flake8 \
 	fzf \
 	gdb \
 	git \
