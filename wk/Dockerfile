@@ -6,6 +6,7 @@ ARG DEBIAN_BUSTER_HASH=sha256:9646b0ee6d68448e09cdee7ac8deb336e519113e5717ec0856
 FROM golang:$GOLANG_VERSION as golang_builder
 RUN go get github.com/genuinetools/reg
 RUN go get github.com/golang/dep/cmd/dep
+RUN go get github.com/wagoodman/dive
 
 # vim-go dependencies
 FROM golang:$GOLANG_VERSION as vimgo_deps
