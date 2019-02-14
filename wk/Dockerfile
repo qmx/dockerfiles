@@ -35,10 +35,6 @@ RUN cargo install --root /opt/rust-tools sccache
 RUN cargo install --root /opt/rust-tools systemfd
 RUN cargo install --root /opt/rust-tools wasm-pack
 
-FROM rustlang/rust:nightly as rust_nightly_builder
-RUN apt-get update && apt-get install -y cmake build-essential pkg-config libssl-dev zlib1g-dev liblzma-dev
-RUN cargo install --root /opt/rust-tools racer
-
 # install sbt
 FROM debian:buster as sbt_builder
 RUN apt-get update && apt-get install -y curl ca-certificates
