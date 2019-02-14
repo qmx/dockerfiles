@@ -158,7 +158,6 @@ RUN curl -L -o /tmp/marinara_0.2.0_amd64.deb https://github.com/qmx/marinara/rel
 RUN curl -L -o /tmp/jump_0.22.0_amd64.deb https://github.com/gsamokovarov/jump/releases/download/v0.22.0/jump_0.22.0_amd64.deb && dpkg -i /tmp/jump_0.22.0_amd64.deb && rm /tmp/*.deb
 # rust essential crates
 COPY --from=rust_builder /opt/rust-tools/bin/* /usr/local/bin/
-COPY --from=rust_nightly_builder /opt/rust-tools/bin/* /usr/local/bin/
 
 # golang tools
 COPY --from=golang_builder /go/bin/* /usr/local/bin/
