@@ -183,6 +183,9 @@ COPY --from=terraform_builder /usr/local/bin/terraform /usr/local/bin/
 # kubectl
 COPY --from=kubectl_builder /usr/local/bin/kubectl /usr/local/bin/
 
+# helm
+COPY --from=helm_builder /usr/local/bin/helm /usr/local/bin/
+COPY --from=helm_builder /usr/local/bin/tiller /usr/local/bin/
 
 # user setup
 ARG user=qmx
