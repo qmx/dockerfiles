@@ -36,19 +36,16 @@ RUN cargo install --root /opt/rust-tools systemfd
 RUN cargo install --root /opt/rust-tools wasm-pack
 
 # install sbt
-FROM debian:buster as sbt_builder
-RUN apt-get update && apt-get install -y curl ca-certificates
+FROM qmxme/curl as sbt_builder
 RUN curl -L -o /tmp/sbt.tgz https://piccolo.link/sbt-1.2.6.tgz && tar -C /opt -zxvf /tmp/sbt.tgz &&  rm -rf /tmp/sbt.tgz
 
 # install terraform
-FROM debian:buster as terraform_builder
-RUN apt-get update && apt-get install -y curl ca-certificates unzip
+FROM qmxme/curl as terraform_builder
 RUN curl -L -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_linux_amd64.zip
 RUN cd /usr/local/bin && unzip /tmp/terraform.zip && chmod 755 /usr/local/bin/terraform
 
 # install kubectl
-FROM debian:buster as kubectl_builder
-RUN apt-get update && apt-get install -y curl ca-certificates unzip
+FROM qmxme/curl as kubectl_builder
 RUN curl -L -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 RUN chmod 755 /usr/local/bin/kubectl
 
