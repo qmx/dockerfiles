@@ -52,6 +52,14 @@ RUN apt-get update && apt-get install -y curl ca-certificates unzip
 RUN curl -L -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 RUN chmod 755 /usr/local/bin/kubectl
 
+# install helm
+FROM qmxme/curl as helm_builder
+RUN curl -L -o /tmp/helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v2.13.0-linux-arm64.tar.gz
+WORKDIR /tmp
+RUN tar -zxvf helm.tar.gz
+RUN cp linux-arm64/helm /usr/local/bin
+RUN cp linux-arm64/tiller /usr/local/bin
+
 # base distro
 FROM debian:buster@$DEBIAN_BUSTER_HASH
 RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
