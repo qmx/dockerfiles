@@ -57,6 +57,11 @@ RUN tar -zxvf helm.tar.gz
 RUN cp linux-arm64/helm /usr/local/bin
 RUN cp linux-arm64/tiller /usr/local/bin
 
+# install docker-compose
+FROM qmxme/curl as compose_builder
+RUN curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+RUN chmod 755 /usr/local/bin/docker-compose
+
 # base distro
 FROM debian:buster@$DEBIAN_BUSTER_HASH
 RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
@@ -183,6 +188,9 @@ COPY --from=kubectl_builder /usr/local/bin/kubectl /usr/local/bin/
 # helm
 COPY --from=helm_builder /usr/local/bin/helm /usr/local/bin/
 COPY --from=helm_builder /usr/local/bin/tiller /usr/local/bin/
+
+# docker-compose
+COPY --from=compose_builder /usr/local/bin/docker-compose /usr/local/bin/
 
 # user setup
 ARG user=qmx
