@@ -104,6 +104,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	hugo \
 	ipcalc \
 	jq \
+	kafkacat \
 	less \
 	libclang-dev \
 	liblzma-dev \
