@@ -51,11 +51,11 @@ RUN chmod 755 /usr/local/bin/kubectl
 
 # install helm
 FROM qmxme/curl as helm_builder
-RUN curl -L -o /tmp/helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v2.13.0-linux-arm64.tar.gz
+RUN curl -L -o /tmp/helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v2.13.0-linux-amd64.tar.gz
 WORKDIR /tmp
 RUN tar -zxvf helm.tar.gz
-RUN cp linux-arm64/helm /usr/local/bin
-RUN cp linux-arm64/tiller /usr/local/bin
+RUN cp linux-amd64/helm /usr/local/bin
+RUN cp linux-amd64/tiller /usr/local/bin
 
 # install docker-compose
 FROM qmxme/curl as compose_builder
