@@ -1,6 +1,7 @@
 ARG GOLANG_VERSION=1.12.0
 ARG RUST_VERSION=1.33.0
 ARG DEBIAN_BUSTER_HASH=sha256:9646b0ee6d68448e09cdee7ac8deb336e519113e5717ec0856d38ca813912930
+ARG SSH_HOST_KEYS_HASH=sha256:9a6630c2fbed11a3f806c5a5c1fe1550b628311d8701680fd740cae94b377e6c
 
 ## golang tools
 FROM golang:$GOLANG_VERSION as golang_builder
@@ -62,17 +63,11 @@ FROM qmxme/curl as compose_builder
 RUN curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 RUN chmod 755 /usr/local/bin/docker-compose
 
+# SSH host keys
+FROM qmxme/openssh@$SSH_HOST_KEYS_HASH as ssh_host_keys
+
 # base distro
 FROM debian:buster@$DEBIAN_BUSTER_HASH
-RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
-	openssh-server \
-	--no-install-recommends \
-	&& rm -rf /var/lib/apt/lists/*
-# sshd setup
-RUN mkdir /var/run/sshd
-RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
-RUN sed 's/#Port 22/Port 3222/' -i /etc/ssh/sshd_config
-RUN echo 'StreamLocalBindUnlink yes' >> /etc/ssh/sshd_config
 
 # default package set
 RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
@@ -123,6 +118,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	nodejs \
 	npm \
 	openjdk-8-jdk-headless \
+	openssh-server \
 	pkg-config \
 	protobuf-compiler \
 	pwgen \
@@ -155,7 +151,6 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	--no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
-
 ENV LANG="en_US.UTF-8"
 ENV LC_ALL="en_US.UTF-8"
 ENV LANGUAGE="en_US.UTF-8"
@@ -164,6 +159,13 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 	locale-gen --purge $LANG && \
 	dpkg-reconfigure --frontend=noninteractive locales && \
 	update-locale LANG=$LANG LC_ALL=$LC_ALL LANGUAGE=$LANGUAGE
+
+# sshd setup
+RUN mkdir /var/run/sshd
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+RUN sed 's/#Port 22/Port 3222/' -i /etc/ssh/sshd_config
+RUN echo 'StreamLocalBindUnlink yes' >> /etc/ssh/sshd_config
+COPY --from=ssh_host_keys /etc/ssh/ssh_host* /etc/ssh/
 
 # rust tools
 RUN curl -L -o /tmp/cpubars_0.2.1_amd64.deb https://github.com/qmx/cpubars/releases/download/0.2.1/cpubars_0.2.1_amd64.deb && dpkg -i /tmp/cpubars_0.2.1_amd64.deb && rm /tmp/*.deb
