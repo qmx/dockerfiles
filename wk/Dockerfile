@@ -110,6 +110,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	liblzma-dev \
 	libpq-dev \
 	libprotoc-dev \
+	librdkafka-dev \
 	libsqlite3-dev \
 	libssl-dev \
 	lldb \
