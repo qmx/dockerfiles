@@ -144,6 +144,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	tmux \
 	unzip \
 	vim-nox \
+	wabt \
 	zgen \
 	zip \
 	zlib1g-dev \
