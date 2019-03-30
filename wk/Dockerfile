@@ -66,8 +66,19 @@ RUN chmod 755 /usr/local/bin/docker-compose
 # SSH host keys
 FROM qmxme/openssh@$SSH_HOST_KEYS_HASH as ssh_host_keys
 
+
 # base distro
 FROM debian:buster@$DEBIAN_BUSTER_HASH
+
+# setup env
+ENV DEBIAN_FRONTEND noninteractive
+ENV TERM linux
+
+ENV LANGUAGE en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+ENV LC_CTYPE en_US.UTF-8
+ENV LC_MESSAGES en_US.UTF-8
 
 # default package set
 RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
@@ -151,10 +162,6 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	zsh \
 	--no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
-
-ENV LANG="en_US.UTF-8"
-ENV LC_ALL="en_US.UTF-8"
-ENV LANGUAGE="en_US.UTF-8"
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 	locale-gen --purge $LANG && \
