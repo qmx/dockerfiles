@@ -35,6 +35,7 @@ RUN cargo install --root /opt/rust-tools perf-focus
 RUN cargo install --root /opt/rust-tools sccache
 RUN cargo install --root /opt/rust-tools systemfd
 RUN cargo install --root /opt/rust-tools wasm-pack
+RUN cargo install --root /opt/rust-tools cargo-web
 
 # install sbt
 FROM qmxme/curl as sbt_builder
