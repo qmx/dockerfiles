@@ -37,10 +37,6 @@ RUN cargo install --root /opt/rust-tools systemfd
 RUN cargo install --root /opt/rust-tools wasm-pack
 RUN cargo install --root /opt/rust-tools cargo-web
 
-# install sbt
-FROM qmxme/curl as sbt_builder
-RUN curl -L -o /tmp/sbt.tgz https://piccolo.link/sbt-1.2.6.tgz && tar -C /opt -zxvf /tmp/sbt.tgz &&  rm -rf /tmp/sbt.tgz
-
 # install terraform
 FROM qmxme/curl as terraform_builder
 RUN curl -L -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_linux_amd64.zip
@@ -188,10 +184,6 @@ COPY --from=golang_builder /go/bin/* /usr/local/bin/
 
 # vim-go tools
 COPY --from=vimgo_deps /go/bin/* /usr/local/bin/
-
-# java tools
-COPY --from=sbt_builder /opt/sbt /opt/sbt
-RUN ln -sf /opt/sbt/bin/sbt /usr/local/bin/sbt
 
 # terraform
 COPY --from=terraform_builder /usr/local/bin/terraform /usr/local/bin/
