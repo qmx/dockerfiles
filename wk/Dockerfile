@@ -87,6 +87,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	clang \
 	cmake \
 	curl \
+	debcargo \
 	default-libmysqlclient-dev \
 	default-mysql-client \
 	direnv \
