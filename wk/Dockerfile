@@ -142,6 +142,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	quilt \
 	restic \
 	ripgrep \
+	rsync \
 	rustc \
 	rust-src \
 	shellcheck \
