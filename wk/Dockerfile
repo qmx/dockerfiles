@@ -7,7 +7,7 @@ ARG SSH_HOST_KEYS_HASH=sha256:9a6630c2fbed11a3f806c5a5c1fe1550b628311d8701680fd7
 FROM golang:$GOLANG_VERSION as golang_builder
 RUN go get github.com/genuinetools/reg
 RUN go get github.com/golang/dep/cmd/dep
-RUN go get github.com/wagoodman/dive
+RUN GO111MODULE=on go get github.com/wagoodman/dive@v0.7.2
 
 # vim-go dependencies
 FROM golang:$GOLANG_VERSION as vimgo_deps
