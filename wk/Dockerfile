@@ -77,9 +77,6 @@ ENV LC_ALL en_US.UTF-8
 ENV LC_CTYPE en_US.UTF-8
 ENV LC_MESSAGES en_US.UTF-8
 
-# enable yarn repo
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
 # default package set
 RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	apache2-utils \
@@ -159,7 +156,6 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	unzip \
 	vim-nox \
 	wabt \
-	yarn \
 	zgen \
 	zip \
 	zlib1g-dev \
@@ -171,6 +167,14 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 	locale-gen --purge $LANG && \
 	dpkg-reconfigure --frontend=noninteractive locales && \
 	update-locale LANG=$LANG LC_ALL=$LC_ALL LANGUAGE=$LANGUAGE
+
+# enable yarn repo
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
+RUN apt-get update -qq && apt-get install -qq -y \
+	yarn \
+	--no-install-recommends \
+	&& rm -rf /var/lib/apt/lists/*
 
 # sshd setup
 RUN mkdir /var/run/sshd
