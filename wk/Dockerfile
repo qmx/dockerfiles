@@ -77,6 +77,9 @@ ENV LC_ALL en_US.UTF-8
 ENV LC_CTYPE en_US.UTF-8
 ENV LC_MESSAGES en_US.UTF-8
 
+# enable yarn repo
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
 # default package set
 RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	apache2-utils \
@@ -156,6 +159,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	unzip \
 	vim-nox \
 	wabt \
+	yarn \
 	zgen \
 	zip \
 	zlib1g-dev \
