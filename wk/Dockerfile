@@ -126,7 +126,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	netcat-openbsd \
 	nodejs \
 	npm \
-	openjdk-8-jdk-headless \
+	openjdk-11-jdk-headless \
 	openssh-server \
 	pkg-config \
 	protobuf-compiler \
