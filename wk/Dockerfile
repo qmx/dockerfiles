@@ -22,7 +22,6 @@ RUN cargo install --root /opt/rust-tools cargo-bloat
 RUN cargo install --root /opt/rust-tools cargo-bump
 RUN cargo install --root /opt/rust-tools cargo-bundle
 RUN cargo install --root /opt/rust-tools cargo-deb
-RUN cargo install --root /opt/rust-tools cargo-docserver
 RUN cargo install --root /opt/rust-tools cargo-edit
 RUN cargo install --root /opt/rust-tools cargo-expand
 RUN cargo install --root /opt/rust-tools cargo-generate
@@ -188,6 +187,7 @@ RUN curl -L -o /tmp/cpubars_0.2.1_amd64.deb https://github.com/qmx/cpubars/relea
 RUN curl -L -o /tmp/marinara_0.2.0_amd64.deb https://github.com/qmx/marinara/releases/download/0.2.0/marinara_0.2.0_amd64.deb && dpkg -i /tmp/marinara_0.2.0_amd64.deb && rm /tmp/*.deb
 RUN curl -L -o /tmp/jump_0.22.0_amd64.deb https://github.com/gsamokovarov/jump/releases/download/v0.22.0/jump_0.22.0_amd64.deb && dpkg -i /tmp/jump_0.22.0_amd64.deb && rm /tmp/*.deb
 RUN curl -L -o /tmp/wk_0.1.1_amd64.deb https://github.com/qmx/wk/releases/download/0.1.1/wk_0.1.1_amd64.deb && dpkg -i /tmp/wk_0.1.1_amd64.deb && rm /tmp/*.deb
+RUN curl -L -o /tmp/cargo-docserver_0.1.2_amd64.deb https://github.com/qmx/cargo-docserver/releases/download/0.1.2/cargo-docserver_0.1.2_amd64.deb && dpkg -i /tmp/cargo-docserver_0.1.2_amd64.deb && rm /tmp/*.deb
 
 # rust essential crates
 COPY --from=rust_builder /opt/rust-tools/bin/* /usr/local/bin/
