@@ -8,6 +8,7 @@ FROM golang:$GOLANG_VERSION as golang_builder
 RUN go get github.com/genuinetools/reg
 RUN go get github.com/golang/dep/cmd/dep
 RUN GO111MODULE=on go get github.com/wagoodman/dive@v0.7.2
+RUN GO111MODULE=on go get github.com/sachaos/todoist@v0.13.1
 
 # vim-go dependencies
 FROM golang:$GOLANG_VERSION as vimgo_deps
