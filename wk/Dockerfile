@@ -39,7 +39,7 @@ RUN cargo install --root /opt/rust-tools cargo-web
 
 # install terraform
 FROM qmxme/curl as terraform_builder
-RUN curl -L -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_linux_amd64.zip
+RUN curl -L -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.11.13/terraform_0.11.13_linux_amd64.zip
 RUN cd /usr/local/bin && unzip /tmp/terraform.zip && chmod 755 /usr/local/bin/terraform
 
 # install kubectl
