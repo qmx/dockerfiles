@@ -1,5 +1,6 @@
 ARG GOLANG_VERSION=1.12.3
-ARG RUST_VERSION=1.33.0
+ARG RUST_VERSION=1.35.0
+ARG TERRAFORM_VERSION=0.12.1
 ARG DEBIAN_BUSTER_HASH=sha256:9646b0ee6d68448e09cdee7ac8deb336e519113e5717ec0856d38ca813912930
 ARG SSH_HOST_KEYS_HASH=sha256:9a6630c2fbed11a3f806c5a5c1fe1550b628311d8701680fd740cae94b377e6c
 
@@ -40,7 +41,7 @@ RUN cargo install --root /opt/rust-tools cargo-web
 
 # install terraform
 FROM qmxme/curl as terraform_builder
-RUN curl -L -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.11.13/terraform_0.11.13_linux_amd64.zip
+RUN curl -L -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/$TERRAFORM_VERSION/terraform_$TERRAFORM_VERSION_linux_amd64.zip
 RUN cd /usr/local/bin && unzip /tmp/terraform.zip && chmod 755 /usr/local/bin/terraform
 
 # install kubectl
