@@ -1,6 +1,0 @@
-#!/bin/sh
-
-ebook-convert "LWN.net Weekly Edition.recipe" \
-"/work/lwn-$(date +"%Y-%m-%d").mobi" \
---output-profile=kindle_pw3
-
