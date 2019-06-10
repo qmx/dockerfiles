@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:lts-alpine
+FROM jenkins/jenkins:2.164.3-alpine
 
 USER root
 RUN apk add --no-cache make docker
