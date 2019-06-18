@@ -183,7 +183,7 @@ RUN apt-get update -qq && apt-get install -qq -y \
 # sshd setup
 RUN mkdir /var/run/sshd
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
-RUN sed 's/#Port 22/Port 3222/' -i /etc/ssh/sshd_config
+RUN sed 's/#Port 22/Port 3223/' -i /etc/ssh/sshd_config
 RUN echo 'StreamLocalBindUnlink yes' >> /etc/ssh/sshd_config
 COPY --from=ssh_host_keys /etc/ssh/ssh_host* /etc/ssh/
 
@@ -238,7 +238,7 @@ RUN /home/$user/.cargo/bin/rustup default system
 
 # make sure we start sshd at the end - always keep this at the bottom
 USER root
-EXPOSE 3222 63200-63220/udp
+EXPOSE 3223
 ADD entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/usr/sbin/sshd", "-D"]
