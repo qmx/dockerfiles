@@ -38,6 +38,7 @@ RUN cargo install --root /opt/rust-tools sccache
 RUN cargo install --root /opt/rust-tools systemfd
 RUN cargo install --root /opt/rust-tools wasm-pack
 RUN cargo install --root /opt/rust-tools cargo-web
+RUN cargo install --root /opt/rust-tools bat
 
 # install terraform
 FROM qmxme/curl as terraform_builder
