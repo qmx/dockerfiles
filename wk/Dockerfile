@@ -255,7 +255,7 @@ RUN /home/$user/.cargo/bin/rustup default system
 
 # make sure we start sshd at the end - always keep this at the bottom
 USER root
-EXPOSE 3222 63200-63220/udp
+EXPOSE 3222
 ADD entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/usr/sbin/sshd", "-D"]
