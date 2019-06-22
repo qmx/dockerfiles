@@ -20,8 +20,26 @@ RUN git clone https://github.com/fatih/vim-go.git /root/.vim/pack/lang/start/vim
 RUN vim +":set nomore" +GoInstallBinaries +qall
 
 # rust tools
-FROM rust:$RUST_VERSION as rust_builder
-RUN apt-get update && apt-get install -y cmake build-essential pkg-config libssl-dev zlib1g-dev liblzma-dev
+FROM debian:sid@$DEBIAN_SID_HASH as rust_builder
+RUN apt-get update && apt-get install \
+	build-essential \
+	ca-certificates \
+	cargo \
+	cmake \
+	default-libmysqlclient-dev \
+	libclang-dev \
+	liblzma-dev \
+	liblzma-dev \
+	libpq-dev \
+	libsqlite3-dev \
+	libssl-dev \
+	libssl-dev \
+	pkg-config \
+	rustc \
+	rust-src \
+	zlib1g-dev \
+	zlib1g-dev \
+	-y
 RUN cargo install --root /opt/rust-tools cargo-bloat
 RUN cargo install --root /opt/rust-tools cargo-bump
 RUN cargo install --root /opt/rust-tools cargo-bundle
