@@ -1,6 +1,6 @@
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
-VERSION ?= $(shell git describe --always)
+VERSION ?= $(shell git describe --always --tags)
 REPO ?= qmxme
 IMAGE ?= ${REPO}/${current_dir}
 
