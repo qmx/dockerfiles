@@ -142,6 +142,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	libssl-dev \
 	lldb \
 	locales \
+	man \
 	mosh \
 	mtr-tiny \
 	musl-tools \
