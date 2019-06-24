@@ -173,6 +173,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	socat \
 	sqlite3 \
 	stow \
+	strace \
 	sudo \
 	tmate \
 	tmux \
