@@ -125,7 +125,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	git \
 	git-crypt \
 	gnupg \
-	golang-1.11 \
+	golang-1.12 \
 	htop \
 	hub \
 	hugo \
