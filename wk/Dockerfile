@@ -40,6 +40,7 @@ RUN apt-get update && apt-get install \
 	zlib1g-dev \
 	zlib1g-dev \
 	-y
+RUN cargo install --root /opt/rust-tools bat
 RUN cargo install --root /opt/rust-tools cargo-bloat
 RUN cargo install --root /opt/rust-tools cargo-bump
 RUN cargo install --root /opt/rust-tools cargo-bundle
@@ -51,13 +52,12 @@ RUN cargo install --root /opt/rust-tools cargo-license
 RUN cargo install --root /opt/rust-tools cargo-release
 RUN cargo install --root /opt/rust-tools cargo-tree
 RUN cargo install --root /opt/rust-tools cargo-watch
+RUN cargo install --root /opt/rust-tools cargo-web
 RUN cargo install --root /opt/rust-tools diesel_cli
 RUN cargo install --root /opt/rust-tools perf-focus
 RUN cargo install --root /opt/rust-tools sccache
 RUN cargo install --root /opt/rust-tools systemfd
 RUN cargo install --root /opt/rust-tools wasm-pack
-RUN cargo install --root /opt/rust-tools cargo-web
-RUN cargo install --root /opt/rust-tools bat
 
 # install terraform
 FROM qmxme/curl as terraform_builder
