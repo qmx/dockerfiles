@@ -45,6 +45,7 @@ RUN cargo install --root /opt/rust-tools cargo-bloat
 RUN cargo install --root /opt/rust-tools cargo-bump
 RUN cargo install --root /opt/rust-tools cargo-bundle
 RUN cargo install --root /opt/rust-tools cargo-deb
+RUN cargo install --root /opt/rust-tools cargo-debstatus
 RUN cargo install --root /opt/rust-tools cargo-edit
 RUN cargo install --root /opt/rust-tools cargo-expand
 RUN cargo install --root /opt/rust-tools cargo-generate
