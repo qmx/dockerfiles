@@ -19,8 +19,26 @@ RUN apt-get update -q && apt-get install -y -qq vim-nox
 RUN git clone https://github.com/fatih/vim-go.git /root/.vim/pack/lang/start/vim-go
 RUN vim +":set nomore" +GoInstallBinaries +qall
 
+
+FROM debian:sid@$DEBIAN_SID_HASH as debian_base
+
+# rust-analyzer
+FROM debian_base as ra_builder
+RUN apt-get update && apt-get install \
+	build-essential \
+	ca-certificates \
+	curl \
+	git \
+	liblzma-dev \
+	libssl-dev \
+	pkg-config \
+	zlib1g-dev \
+	-y
+RUN curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.36.0
+RUN . /root/.cargo/env && rustc -V && git clone https://github.com/rust-analyzer/rust-analyzer.git /tmp/rust-analyzer && cd /tmp/rust-analyzer && cargo install-lsp --root /opt/rust-tools
+
 # rust tools
-FROM debian:sid@$DEBIAN_SID_HASH as rust_builder
+FROM debian_base as rust_builder
 RUN apt-get update && apt-get install \
 	build-essential \
 	ca-certificates \
@@ -88,7 +106,7 @@ FROM qmxme/openssh@$SSH_HOST_KEYS_HASH as ssh_host_keys
 
 
 # base distro
-FROM debian:sid@$DEBIAN_SID_HASH
+FROM debian_base
 
 # setup env
 ENV DEBIAN_FRONTEND noninteractive
@@ -217,6 +235,7 @@ RUN curl -L -o /tmp/cargo-docserver_0.1.2_amd64.deb https://github.com/qmx/cargo
 
 # rust essential crates
 COPY --from=rust_builder /opt/rust-tools/bin/* /usr/local/bin/
+COPY --from=ra_builder /opt/rust-tools/bin/* /usr/local/bin/
 
 # golang tools
 COPY --from=golang_builder /go/bin/* /usr/local/bin/
