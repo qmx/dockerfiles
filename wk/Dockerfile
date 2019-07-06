@@ -265,9 +265,8 @@ RUN git clone --recursive https://github.com/qmx/dotfiles.git ~/.dotfiles
 RUN cd ~/.dotfiles && stow -v .
 
 # install rust
-RUN curl -sSf https://sh.rustup.rs | zsh -s -- -y --default-toolchain none
-RUN /home/$user/.cargo/bin/rustup toolchain link system /usr
-RUN /home/$user/.cargo/bin/rustup default system
+RUN curl -sSf https://sh.rustup.rs | zsh -s -- -y --default-toolchain 1.36.0
+RUN . /home/$user/.cargo/env && rustup toolchain link system /usr && rustup component add rustfmt rust-src
 
 # make sure we start sshd at the end - always keep this at the bottom
 USER root
