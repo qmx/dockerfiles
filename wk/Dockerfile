@@ -44,15 +44,12 @@ RUN apt-get update && apt-get install \
 	default-libmysqlclient-dev \
 	libclang-dev \
 	liblzma-dev \
-	liblzma-dev \
 	libpq-dev \
 	libsqlite3-dev \
-	libssl-dev \
 	libssl-dev \
 	pkg-config \
 	rustc \
 	rust-src \
-	zlib1g-dev \
 	zlib1g-dev \
 	-y
 RUN cargo install --root /opt/rust-tools bat
