@@ -16,7 +16,7 @@ RUN apt-get update -q && apt-get install -y -qq vim-nox
 RUN git clone https://github.com/fatih/vim-go.git /root/.vim/pack/lang/start/vim-go
 RUN vim +":set nomore" +GoInstallBinaries +qall
 
-
+# define default base debian image
 FROM debian:sid@$DEBIAN_SID_HASH as debian_base
 
 # rust-analyzer
