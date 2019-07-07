@@ -268,6 +268,9 @@ RUN mkdir ~/.ssh && curl -fsL https://github.com/$github_user.keys > ~/.ssh/auth
 # some empty folders, with proper permissions
 RUN mkdir -p ~/bin ~/.cargo/bin ~/.config ~/tmp ~/.gnupg ~/.local ~/.vim && chmod 700 ~/.gnupg
 
+# install metals-vim
+RUN coursier bootstrap  --java-opt -Xss4m --java-opt -Xms100m --java-opt -Dmetals.client=coc.nvim org.scalameta:metals_2.12:0.7.0 -r bintray:scalacenter/releases -o ~/bin/metals-vim -f
+
 # dotfile setup
 RUN git clone --recursive https://github.com/qmx/dotfiles.git ~/.dotfiles
 RUN cd ~/.dotfiles && stow -v .
