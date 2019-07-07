@@ -95,6 +95,11 @@ FROM qmxme/curl as compose_builder
 RUN curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 RUN chmod 755 /usr/local/bin/docker-compose
 
+# install coursier
+FROM qmxme/curl as coursier_builder
+RUN curl -L -o /usr/local/bin/coursier https://github.com/coursier/coursier/releases/download/v1.1.0-M9/coursier
+RUN chmod 755 /usr/local/bin/coursier
+
 # SSH host keys
 FROM qmxme/openssh@$SSH_HOST_KEYS_HASH as ssh_host_keys
 
@@ -248,6 +253,9 @@ COPY --from=helm_builder /usr/local/bin/helm /usr/local/bin/tiller /usr/local/bi
 
 # docker-compose
 COPY --from=compose_builder /usr/local/bin/docker-compose /usr/local/bin/
+
+# coursier
+COPY --from=coursier_builder /usr/local/bin/coursier /usr/local/bin/
 
 # user setup
 ARG user=qmx
