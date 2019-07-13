@@ -277,7 +277,8 @@ RUN cd ~/.dotfiles && stow -v .
 
 # install rust
 RUN curl -sSf https://sh.rustup.rs | zsh -s -- -y --default-toolchain 1.36.0
-RUN . /home/$user/.cargo/env && rustup toolchain link system /usr && rustup component add rustfmt rust-src
+RUN . /home/$user/.cargo/env && rustup toolchain link system /usr && rustup component add rustfmt rust-src rls
+RUN vim -c 'CocInstall -sync coc-rls coc-git coc-json coc-html|q'
 
 # make sure we start sshd at the end - always keep this at the bottom
 USER root
