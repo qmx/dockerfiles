@@ -121,6 +121,7 @@ ENV LC_MESSAGES en_US.UTF-8
 RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	apache2-utils \
 	apt-transport-https \
+	awscli \
 	build-essential \
 	ca-certificates \
 	cargo \
