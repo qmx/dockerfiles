@@ -32,7 +32,8 @@ RUN apt-get update && apt-get install \
 	zlib1g-dev \
 	-y
 RUN curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.37.0
-RUN . /root/.cargo/env && rustc -V && git clone https://github.com/rust-analyzer/rust-analyzer.git /tmp/rust-analyzer && cd /tmp/rust-analyzer && cargo install-ra --server --root /opt/rust-tools
+ENV CARGO_INSTALL_ROOT /opt/rust-tools
+RUN . /root/.cargo/env && rustc -V && git clone https://github.com/rust-analyzer/rust-analyzer.git /tmp/rust-analyzer && cd /tmp/rust-analyzer && cargo install-ra --server
 
 # rust tools
 FROM debian_base as rust_builder
