@@ -6,9 +6,9 @@ ARG SSH_HOST_KEYS_HASH=sha256:9a6630c2fbed11a3f806c5a5c1fe1550b628311d8701680fd7
 FROM golang:1.13.1 as golang_builder
 RUN go get github.com/genuinetools/reg
 RUN go get github.com/golang/dep/cmd/dep
-RUN GO111MODULE=on go get github.com/wagoodman/dive@v0.7.2
-RUN GO111MODULE=on go get github.com/sachaos/todoist@v0.13.1
-RUN GO111MODULE=on go get github.com/screwdriver-cd/gitversion@v1.1.2
+RUN GO111MODULE=on go get github.com/wagoodman/dive@v0.8.1
+RUN GO111MODULE=on go get github.com/sachaos/todoist@v0.14.0
+RUN GO111MODULE=on go get github.com/screwdriver-cd/gitversion@v1.1.3
 
 # vim-go dependencies
 FROM golang:1.13.1 as vimgo_deps
