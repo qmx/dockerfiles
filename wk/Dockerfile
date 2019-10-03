@@ -3,7 +3,7 @@ ARG DEBIAN_SID_HASH=sha256:fc6ae865d58728644a7242375b777a03c8933600c0aff9df491e7
 ARG SSH_HOST_KEYS_HASH=sha256:9a6630c2fbed11a3f806c5a5c1fe1550b628311d8701680fd740cae94b377e6c
 
 ## golang tools
-FROM golang:1.12.3 as golang_builder
+FROM golang:1.13.1 as golang_builder
 RUN go get github.com/genuinetools/reg
 RUN go get github.com/golang/dep/cmd/dep
 RUN GO111MODULE=on go get github.com/wagoodman/dive@v0.7.2
@@ -11,7 +11,7 @@ RUN GO111MODULE=on go get github.com/sachaos/todoist@v0.13.1
 RUN GO111MODULE=on go get github.com/screwdriver-cd/gitversion@v1.1.2
 
 # vim-go dependencies
-FROM golang:1.12.3 as vimgo_deps
+FROM golang:1.13.1 as vimgo_deps
 RUN apt-get update -q && apt-get install -y -qq vim-nox
 RUN git clone https://github.com/fatih/vim-go.git /root/.vim/pack/lang/start/vim-go
 RUN vim +":set nomore" +GoInstallBinaries +qall
@@ -144,7 +144,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	git \
 	git-crypt \
 	gnupg \
-	golang-1.12 \
+	golang-1.13 \
 	htop \
 	hub \
 	hugo \
