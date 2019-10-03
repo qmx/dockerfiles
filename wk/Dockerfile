@@ -166,6 +166,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	mtr-tiny \
 	musl-tools \
 	ncdu \
+	neovim \
 	netcat-openbsd \
 	nodejs \
 	npm \
