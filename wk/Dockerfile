@@ -75,7 +75,7 @@ RUN cargo install --root /opt/rust-tools wasm-pack
 
 # install terraform
 FROM qmxme/curl as terraform_builder
-RUN curl -L -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip
+RUN curl -L -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.9/terraform_0.12.9_linux_amd64.zip
 RUN cd /usr/local/bin && unzip /tmp/terraform.zip && chmod 755 /usr/local/bin/terraform
 
 # install kubectl
@@ -85,7 +85,7 @@ RUN chmod 755 /usr/local/bin/kubectl
 
 # install helm
 FROM qmxme/curl as helm_builder
-RUN curl -L -o /tmp/helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v2.13.0-linux-amd64.tar.gz
+RUN curl -L -o /tmp/helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v2.14.3-linux-amd64.tar.gz
 WORKDIR /tmp
 RUN tar -zxvf helm.tar.gz
 RUN cp linux-amd64/helm /usr/local/bin
