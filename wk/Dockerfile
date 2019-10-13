@@ -137,6 +137,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	entr \
 	exuberant-ctags \
 	fakeroot-ng \
+	fd-find \
 	flake8 \
 	fzf \
 	gdb \
