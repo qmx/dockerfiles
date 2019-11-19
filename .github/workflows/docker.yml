@@ -1,0 +1,19 @@
+name: pushimage
+
+on:
+  push:
+    paths: 
+      - 'socat/*'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Publish
+      working-directory: socat/
+      uses: elgohr/Publish-Docker-Github-Action@2.8
+      with:
+        name: qmxme/socat
